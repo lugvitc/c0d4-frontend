@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <Image
-        src="/neon_penguin.png"
+        src="/neon_penguin.svg"
         alt="Penguin Logo"
         width={250}
         height={250}
