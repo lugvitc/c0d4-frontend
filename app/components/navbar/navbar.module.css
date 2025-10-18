@@ -1,0 +1,24 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #000066, #000033);
+  padding: 1rem;
+  color: #00ffcc;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+.navLinks a {
+  color: #00ffcc;
+  text-decoration: none;
+}
+.navLinks a:hover {
+  text-decoration: underline;
+}
