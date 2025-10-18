@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Kode_Mono } from "next/font/google";
+import Navbar from "./components/navbar/Navbar";
 import "./globals.css";
 
 const kodeMono = Kode_Mono({
@@ -19,7 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${kodeMono.variable} antialiased`}>{children}</body>
+      <body
+        className={`${kodeMono.variable} flex min-h-screen flex-col antialiased`}
+      >
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
