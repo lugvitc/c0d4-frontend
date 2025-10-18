@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <div className="relative flex min-h-screen flex-col items-start justify-center bg-black px-32 py-8">
       <Link
@@ -24,7 +24,7 @@ export default function SignUp() {
         />
       </div>
       <h1
-        className="mb-6 ml-36 text-6xl font-semibold tracking-wider"
+        className="mb-6 ml-40 text-6xl font-semibold tracking-wider"
         style={{
           fontFamily: "var(--font-orbitron)",
           textShadow:
@@ -32,24 +32,10 @@ export default function SignUp() {
           width: "400px",
         }}
       >
-        SIGN UP
+        SIGN IN
       </h1>
 
       <form className="ml-23 flex w-fit flex-col gap-4" method="POST">
-        <input
-          type="text"
-          name="userName"
-          placeholder="Name"
-          className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
-          style={{ fontFamily: "var(--font-jura)", width: "400px" }}
-        />
-        <input
-          type="text"
-          name="regNo"
-          placeholder="Registration Number"
-          className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
-          style={{ fontFamily: "var(--font-jura)", width: "400px" }}
-        />
         <input
           type="email"
           name="email"
@@ -75,7 +61,7 @@ export default function SignUp() {
             fontWeight: "700",
           }}
         >
-          Sign Up
+          Sign In
         </button>
 
         <div className="mt-4 -ml-4 text-center">
@@ -83,15 +69,25 @@ export default function SignUp() {
             className="text-gray-400"
             style={{ fontFamily: "var(--font-jura)" }}
           >
-            Already have an account?
+            Don&apos;t have an account?
             <span className="mx-1"></span>
             <Link
-              href="/?page=signIn"
+              href="/"
               className="text-[#00E1FF] underline transition-colors duration-300 hover:text-white"
             >
-              Sign In
+              Sign Up
             </Link>
           </span>
+        </div>
+
+        <div className="mt-2 -ml-4 text-center">
+          <Link
+            href="#"
+            className="text-gray-400 underline transition-colors duration-300 hover:text-white"
+            style={{ fontFamily: "var(--font-jura)" }}
+          >
+            Forgot your password?
+          </Link>
         </div>
       </form>
     </div>

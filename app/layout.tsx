@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
-import { Jura, Kode_Mono, Orbitron } from "next/font/google";
+import { Jura, Orbitron } from "next/font/google";
 import "./globals.css";
-
-const kodeMono = Kode_Mono({
-  variable: "--font-kode-mono",
-  subsets: ["latin"],
-});
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -24,14 +19,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${kodeMono.variable} ${orbitron.variable} ${jura.variable} antialiased`}
-      >
+      <body className={`${orbitron.variable} ${jura.variable} antialiased`}>
         {children}
       </body>
     </html>
