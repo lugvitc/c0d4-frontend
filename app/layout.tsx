@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${kodeMono.variable} antialiased`}>
+      <body
+        className={`${kodeMono.variable} flex min-h-screen flex-col antialiased`}
+      >
         <Navbar />
         {children}
       </body>

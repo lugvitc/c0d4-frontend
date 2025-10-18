@@ -1,13 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./navbar.module.css";
 
 export default function Navbar() {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo}>Cyber-0-Day 4.0</div>
+      <Image
+        src="/neon_penguin.png"
+        alt="Penguin Logo"
+        width={250}
+        height={250}
+        priority
+        className={styles.logoImage}
+      />
+      <div className={styles.topText}>lugvitc.net</div>
       <ul className={styles.navLinks}>
         <li>
-          <Link href="/">Sign Up</Link>
+          <Link href="/">Sign up</Link>
         </li>
         <li>
           <Link href="/">Timeline</Link>

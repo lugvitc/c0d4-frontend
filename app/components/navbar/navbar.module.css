@@ -1,24 +1,55 @@
 .navbar {
+  position: fixed;
+  top: 42%;
+  right: 100px;
+  transform: translateY(-50%);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  background: linear-gradient(to right, #000066, #000033);
-  padding: 1rem;
-  color: #00ffcc;
+  color: #e0e0e0;
 }
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+
+.topText {
+  font-size: 28px;
+  margin-bottom: 100px;
+  color: #b0b0b0;
+  letter-spacing: 1px;
+  text-align: center;
 }
+
+.logoImage {
+  margin-bottom: -30px;
+}
+
 .navLinks {
   list-style: none;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 100px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
 }
+
 .navLinks a {
-  color: #00ffcc;
+  color: #e0e0e0 !important;
   text-decoration: none;
+  font-size: 28px;
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+  letter-spacing: 5px;
+  white-space: nowrap;
+  text-shadow:
+    0 0 8px rgba(224, 224, 224, 0.6),
+    0 0 12px rgba(224, 224, 224, 0.4);
 }
+
 .navLinks a:hover {
-  text-decoration: underline;
+  color: #38c8f5 !important;
+  text-decoration: none;
+  text-shadow:
+    0 0 10px #38c8f5,
+    0 0 20px #38c8f5,
+    0 0 30px #38c8f5;
 }
