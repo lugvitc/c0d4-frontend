@@ -1,8 +1,14 @@
-export default function Home() {
-  return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black text-white">
-      <h1 className="mb-8 text-5xl font-bold">Cyber-0-Day 4.0</h1>
-      <p className="mb-8 text-xl">The LUGVITC Flagship CTF Event</p>
-    </div>
-  );
+import SignIn from "./signInUp/signIn";
+import SignUp from "./signInUp/signUp";
+
+interface PageProps {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  const params = await searchParams;
+  if (params?.page === "signIn") {
+    return <SignIn />;
+  }
+  return <SignUp />;
 }
