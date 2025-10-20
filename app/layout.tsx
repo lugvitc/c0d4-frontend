@@ -12,18 +12,6 @@ const jura = Jura({
   subsets: ["latin"],
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-});
-
-const jura = Jura({
-  variable: "--font-jura",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
 export const metadata: Metadata = {
   title: "Cyber-0-Day 4.0",
   description: "The LUGVITC Flagship CTF Event",

@@ -1,5 +1,5 @@
-import SignIn from "./signInUp/signIn";
-import SignUp from "./signInUp/signUp";
+import SignIn from "./login/signInUp/signIn";
+import SignUp from "./login/signInUp/signUp";
 
 interface PageProps {
   searchParams: Promise<{ page?: string }>;

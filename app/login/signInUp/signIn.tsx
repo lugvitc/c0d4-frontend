@@ -1,7 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Validation
+    router.push("login/teamDetails");
+  };
+
   return (
     <div className="relative flex min-h-screen flex-col items-start justify-center bg-black px-32 py-8">
       <Link
@@ -35,7 +46,11 @@ export default function SignIn() {
         SIGN IN
       </h1>
 
-      <form className="ml-23 flex w-fit flex-col gap-4" method="POST">
+      <form
+        className="ml-23 flex w-fit flex-col gap-4"
+        method="POST"
+        onSubmit={handleSubmit}
+      >
         <input
           type="email"
           name="email"
