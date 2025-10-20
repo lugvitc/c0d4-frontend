@@ -69,7 +69,7 @@ export default function SignIn() {
 
         <button
           type="submit"
-          className="mt-4 rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
+          className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
           style={{
             fontFamily: "var(--font-orbitron)",
             width: "400px",

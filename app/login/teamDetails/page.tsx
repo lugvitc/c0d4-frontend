@@ -1,4 +1,3 @@
-// src/app/login/team_details/page.tsx
 "use client";
 
 import Image from "next/image";
@@ -73,9 +72,12 @@ export default function TeamDetailsPage() {
         </h1>
 
         {/* Form */}
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form
+          className="ml-23 flex w-fit flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
           {/* Team Name */}
-          <div>
+          <div className="w-[400px]">
             <label
               htmlFor="teamName"
               className="text-lg text-gray-400"
@@ -89,7 +91,7 @@ export default function TeamDetailsPage() {
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
               placeholder="Enter your team name"
-              className="rounded-md border border-gray-600 bg-transparent px-3 py-2 text-white placeholder-gray-400 focus:border-[#00E1FF] focus:outline-none"
+              className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
               style={{
                 fontFamily: "var(--font-jura)",
                 width: "400px",
@@ -111,7 +113,7 @@ export default function TeamDetailsPage() {
                 value={member.name}
                 onChange={(e) => handleChange(index, "name", e.target.value)}
                 placeholder="Full Name"
-                className="rounded-md border border-gray-600 bg-transparent px-3 py-2 text-white placeholder-gray-400 focus:border-[#00E1FF] focus:outline-none"
+                className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
                 style={{
                   fontFamily: "var(--font-jura)",
                   width: "400px",
@@ -123,8 +125,8 @@ export default function TeamDetailsPage() {
                 onChange={(e) =>
                   handleChange(index, "registrationID", e.target.value)
                 }
-                placeholder="Registration ID"
-                className="rounded-md border border-gray-600 bg-transparent px-3 py-2 text-white placeholder-gray-400 focus:border-[#00E1FF] focus:outline-none"
+                placeholder="Registration Number"
+                className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
                 style={{
                   fontFamily: "var(--font-jura)",
                   width: "400px",
@@ -146,26 +148,27 @@ export default function TeamDetailsPage() {
             </div>
           ))}
 
+          <button
+            type="button"
+            onClick={addMember}
+            className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
+            style={{
+              fontFamily: "var(--font-orbitron)",
+              width: "400px",
+            }}
+          >
+            Add Member
+          </button>
+
           {/* Buttons */}
           <div className="mt-6 flex flex-col gap-3">
             <button
-              type="button"
-              onClick={addMember}
-              className="rounded-md border border-gray-500 bg-transparent px-6 py-2 text-white transition-all duration-300 hover:border-white"
-              style={{
-                fontFamily: "var(--font-orbitron)",
-                width: "195px",
-              }}
-            >
-              + Add Member
-            </button>
-            <button
               type="submit"
               onClick={handleCreateTeam}
-              className="rounded-md border border-gray-500 bg-transparent px-6 py-2 text-white transition-all duration-300 hover:border-white"
+              className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
               style={{
                 fontFamily: "var(--font-orbitron)",
-                width: "195px",
+                width: "400px",
               }}
             >
               Create Team
