@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
-import { Kode_Mono } from "next/font/google";
+import { Jura, Kode_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 
 const kodeMono = Kode_Mono({
   variable: "--font-kode-mono",
   subsets: ["latin"],
+});
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
+const jura = Jura({
+  variable: "--font-jura",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -19,7 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${kodeMono.variable} antialiased`}>{children}</body>
+      <body
+        className={`${kodeMono.variable} ${jura.variable} ${orbitron.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
