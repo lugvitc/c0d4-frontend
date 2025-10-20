@@ -19,7 +19,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${kodeMono.variable} antialiased`}>{children}</body>
+      <body className={`${kodeMono.variable} antialiased`}>
+        <video
+          className="fixed -z-10 h-full w-full object-cover blur-sm"
+          autoPlay
+          loop
+          muted
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        {children}
+      </body>
     </html>
   );
 }
