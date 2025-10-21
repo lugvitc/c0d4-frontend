@@ -9,18 +9,18 @@ export default function Navbar() {
       <Image
         src="/neon_penguin.svg"
         alt="Penguin Logo"
-        width={200}
-        height={200}
+        width={300}
+        height={300}
         priority
       />
 
-      <div className="mb-24 text-center text-2xl tracking-wide text-[#B0B0B0]">
+      <div className="mb-24 text-center text-2xl tracking-wide">
         lugvitc.net
       </div>
 
       <ul className="m-0 flex list-none flex-col gap-24 p-0 text-center">
         <li>
-          <HackerLink href="/" text="Sign Up" />
+          <HackerLink href="/signup" text="Sign Up" />
         </li>
         <li>
           <HackerLink href="/" text="Timeline" />
@@ -29,7 +29,7 @@ export default function Navbar() {
           <HackerLink href="/" text="Rules" />
         </li>
         <li>
-          <HackerLink href="/" text="Leaderboard" />
+          <HackerLink href="/leaderboard" text="Leaderboard" />
         </li>
         <li>
           <HackerLink href="/" text="Prizes" />
