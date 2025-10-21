@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 
 const linkStyles = `
-  whitespace-nowrap text-[28px]
+  whitespace-nowrap text-2xl
   text-[#E0E0E0] no-underline
-  tracking-[3px]
+  tracking-wider
   transition-all duration-300 ease-in-out
   [text-shadow:0_0_8px_rgba(224,224,224,0.6),_0_0_12px_rgba(224,224,224,0.4)]
   hover:text-[#38c8f5] hover:no-underline

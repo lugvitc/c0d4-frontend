@@ -14,11 +14,11 @@ export default function Navbar() {
         priority
       />
 
-      <div className="mt-[-1px] mb-[100px] text-center text-[28px] tracking-[1px] text-[#B0B0B0]">
+      <div className="mb-24 text-center text-2xl tracking-wide text-[#B0B0B0]">
         lugvitc.net
       </div>
 
-      <ul className="m-0 flex list-none flex-col gap-[100px] p-0 text-center">
+      <ul className="m-0 flex list-none flex-col gap-24 p-0 text-center">
         <li>
           <HackerLink href="/" text="Sign Up" />
         </li>
