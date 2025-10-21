@@ -33,7 +33,7 @@ export default function TeamDetailsPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-start justify-center bg-transparent px-32 py-8">
+    <div className="relative flex min-h-screen flex-col items-start justify-center px-32 py-8">
       {/* Top-right link */}
       <Link
         href="https://lugvitc.net"

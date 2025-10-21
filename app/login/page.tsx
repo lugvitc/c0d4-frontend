@@ -9,12 +9,11 @@ export default function SignIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validation
-    router.push("login/teamDetails");
+    router.push("team");
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-start justify-center bg-black px-32 py-8">
+    <div className="relative flex min-h-screen flex-col items-start justify-center px-32 py-8">
       <Link
         href="https://lugvitc.net"
         target="_blank"

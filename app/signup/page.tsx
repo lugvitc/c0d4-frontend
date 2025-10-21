@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SignUp() {
   return (
-    <div className="relative flex min-h-screen flex-col items-start justify-center bg-black px-32 py-8">
+    <div className="relative flex min-h-screen flex-col items-start justify-center px-32 py-8">
       <Link
         href="https://lugvitc.net"
         target="_blank"
