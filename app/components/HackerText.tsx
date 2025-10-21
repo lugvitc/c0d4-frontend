@@ -11,6 +11,7 @@ const linkStyles = `
   [text-shadow:0_0_8px_rgba(224,224,224,0.6),_0_0_12px_rgba(224,224,224,0.4)]
   hover:text-[#38c8f5] hover:no-underline
   hover:[text-shadow:0_0_10px_#38c8f5,_0_0_20px_#38c8f5,_0_0_30px_#38c8f5]
+  select-none
 `;
 
 const CHARS =
