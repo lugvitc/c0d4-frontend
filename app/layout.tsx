@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
-import { Kode_Mono } from "next/font/google";
+import { Jura, Kode_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 
 const kodeMono = Kode_Mono({
   variable: "--font-kode-mono",
+  subsets: ["latin"],
+});
+
+const jura = Jura({
+  variable: "--font-jura",
+  subsets: ["latin"],
+});
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
 });
 
@@ -19,9 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${kodeMono.variable} antialiased`}>
+      <body
+        className={`${kodeMono.variable} ${jura.variable} ${orbitron.variable} antialiased`}
+      >
         <video
-          className="fixed -z-10 h-full w-full object-cover blur-sm"
+          className="absolute -z-10 h-full w-full object-cover blur-sm"
           autoPlay
           loop
           muted
