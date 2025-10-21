@@ -40,7 +40,7 @@ export default function HackerLink({
     intervalRef.current = setInterval(() => {
       const newText = text
         .split("")
-        .map((letter, index) => {
+        .map((_, index) => {
           if (index < iteration) {
             return text[index];
           }

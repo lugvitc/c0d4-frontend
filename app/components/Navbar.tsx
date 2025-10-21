@@ -5,7 +5,7 @@ import HackerLink from "./HackerText";
 
 export default function Navbar() {
   return (
-    <nav className="absolute top-[43%] right-[100px] flex -translate-y-1/2 flex-col items-center text-[#E0E0E0]">
+    <nav className="absolute top-12 right-20 flex flex-col items-center text-[#E0E0E0]">
       <Image
         src="/neon_penguin.svg"
         alt="Penguin Logo"
