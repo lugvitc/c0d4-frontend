@@ -30,7 +30,10 @@
   font-weight: 400;
   color: #a5a5a5;
   text-align: center;
-  transition: background-color 0.2s , border-color 0.2s , transform 0.2s ;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   font-family: var(--font-kode-mono);
@@ -46,30 +49,31 @@
 /* Grid Item Placement */
 
 /* Row 1 */
-.categoryCard:nth-child(1) { /* OPERATING SYSTEMS */
-  grid-column: span 3/5; 
-  
+.categoryCard:nth-child(1) {
+  /* OPERATING SYSTEMS */
+  grid-column: span 3/5;
 }
 
-.categoryCard:nth-child(2) { /* OSINT */
-  grid-column: span 1; 
+.categoryCard:nth-child(2) {
+  /* OSINT */
+  grid-column: span 1;
 }
 
 /* Row 2 */
-.categoryCard:nth-child(3) { /* WEB EXPLOITATION */
-  grid-column: span 3; 
+.categoryCard:nth-child(3) {
+  /* WEB EXPLOITATION */
+  grid-column: span 3;
 }
 
-.categoryCard:nth-child(4) { /* BINARY EXPLOITATION */
-  grid-column: span 3; 
+.categoryCard:nth-child(4) {
+  /* BINARY EXPLOITATION */
+  grid-column: span 3;
 }
 
 /* Row 3 */
-.categoryCard:nth-child(5) { /* AND SO MUCH MORE! */
-  grid-column: span 6;          
-  padding: 1.75rem;      
-  justify-self: center;         
+.categoryCard:nth-child(5) {
+  /* AND SO MUCH MORE! */
+  grid-column: span 6;
+  padding: 1.75rem;
+  justify-self: center;
 }
-
-
-

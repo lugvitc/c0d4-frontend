@@ -1,11 +1,11 @@
-import styles from './Categories.module.css';
+import styles from "./Categories.module.css";
 
 const categories = [
-  'OPERATING SYSTEMS',
-  'OSINT',
-  'WEB EXPLOITATION',
-  'BINARY EXPLOITATION',
-  'AND SO MUCH MORE!',
+  "OPERATING SYSTEMS",
+  "OSINT",
+  "WEB EXPLOITATION",
+  "BINARY EXPLOITATION",
+  "AND SO MUCH MORE!",
 ];
 
 const Categories = () => {
