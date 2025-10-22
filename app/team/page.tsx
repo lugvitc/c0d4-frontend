@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function TeamDetailsPage() {
   const [teamName, setTeamName] = useState("");
   const [members, setMembers] = useState([{ name: "", registrationID: "" }]);
+  const router = useRouter();
 
   const addMember = () => {
     setMembers([...members, { name: "", registrationID: "" }]);
@@ -22,14 +24,15 @@ export default function TeamDetailsPage() {
     setMembers(updated);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     console.log({ teamName, members });
   };
 
-  const handleCreateTeam = () => {
+  const handleCreateTeam = (e: React.FormEvent) => {
+    e.preventDefault();
     const teamData = { teamName, members };
     console.log("Team Created:", teamData);
+    router.push("/success");
   };
 
   return (
@@ -50,22 +53,21 @@ export default function TeamDetailsPage() {
       {/* Bottom-right title image*/}
       <div className="absolute right-10 bottom-4">
         <Image
-          src="/images/titleCard.svg"
+          src="/title-card.svg"
           alt="Title Card"
           width={500}
           height={150}
         />
       </div>
 
-      <div className="flex w-[450px] flex-col justify-center rounded-2xl p-8 backdrop-blur-lg">
+      <div className="no-scrollbar absolute top-0 left-0 flex h-full w-1/2 flex-col items-center justify-center overflow-y-scroll bg-white/5 text-center backdrop-blur-lg">
         {/* Heading */}
         <h1
-          className="mb-6 text-6xl font-semibold tracking-wider whitespace-nowrap"
+          className="mb-8 text-center text-6xl font-semibold tracking-wider"
           style={{
             fontFamily: "var(--font-orbitron)",
             textShadow:
               "0 0 20px #00E1FF, 0 0 40px #00E1FF, 0 0 60px #00E1FF, 0 0 80px #00E1FF",
-            width: "500px",
           }}
         >
           CREATE A TEAM
@@ -73,14 +75,14 @@ export default function TeamDetailsPage() {
 
         {/* Form */}
         <form
-          className="ml-23 flex w-fit flex-col gap-4"
+          className="flex flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
         >
           {/* Team Name */}
-          <div className="w-[400px]">
+          <div className="flex w-[400px] flex-col items-start">
             <label
               htmlFor="teamName"
-              className="text-lg text-gray-400"
+              className="text-left text-lg text-gray-400"
               style={{ fontFamily: "var(--font-jura)" }}
             >
               Team Name
@@ -103,7 +105,7 @@ export default function TeamDetailsPage() {
           {members.map((member, index) => (
             <div key={index} className="flex flex-col gap-2">
               <label
-                className="text-lg text-gray-400"
+                className="text-left text-lg text-gray-400"
                 style={{ fontFamily: "var(--font-jura)" }}
               >
                 Team Member {index + 1} {index === 0 && "(Team Lead)"}
@@ -137,7 +139,7 @@ export default function TeamDetailsPage() {
                 <button
                   type="button"
                   onClick={() => removeMember(index)}
-                  className="mt-2 self-end rounded-md border border-gray-500 bg-transparent px-4 py-1 text-white transition-all duration-300 hover:border-white"
+                  className="mt-2 cursor-pointer self-end rounded-md border border-gray-500 bg-transparent px-4 py-1 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
                   style={{
                     fontFamily: "var(--font-jura)",
                   }}
@@ -148,6 +150,7 @@ export default function TeamDetailsPage() {
             </div>
           ))}
 
+          {/* Buttons */}
           <button
             type="button"
             onClick={addMember}
@@ -159,21 +162,17 @@ export default function TeamDetailsPage() {
           >
             Add Member
           </button>
-
-          {/* Buttons */}
-          <div className="mt-6 flex flex-col gap-3">
-            <button
-              type="submit"
-              onClick={handleCreateTeam}
-              className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
-              style={{
-                fontFamily: "var(--font-orbitron)",
-                width: "400px",
-              }}
-            >
-              Create Team
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleCreateTeam}
+            className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
+            style={{
+              fontFamily: "var(--font-orbitron)",
+              width: "400px",
+            }}
+          >
+            Create Team
+          </button>
         </form>
       </div>
     </div>

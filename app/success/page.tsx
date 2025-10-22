@@ -31,7 +31,7 @@ export default function SuccessPage() {
       {/* Bottom-right title image*/}
       <div className="absolute right-10 bottom-4">
         <Image
-          src="/images/titleCard.svg"
+          src="/title-card.svg"
           alt="Title Card"
           width={500}
           height={150}
@@ -39,7 +39,7 @@ export default function SuccessPage() {
       </div>
 
       <div className="flex flex-1 items-center justify-center">
-        <div className="flex-w-[450px] flex flex-col justify-center rounded-2xl p-8 backdrop-blur-lg">
+        <div className="flex-w-[450px] flex flex-col justify-center rounded-2xl p-8">
           {/* Heading */}
           <h1
             className="mb-6 text-center text-6xl font-semibold tracking-wider"
