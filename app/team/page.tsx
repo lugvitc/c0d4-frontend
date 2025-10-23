@@ -60,7 +60,21 @@ export default function TeamDetailsPage() {
         />
       </div>
 
-      <div className="no-scrollbar absolute top-0 left-0 flex h-full w-1/2 flex-col items-center justify-center overflow-y-scroll bg-white/5 text-center backdrop-blur-lg">
+      <div
+        className="absolute top-0 left-0 flex h-full w-1/2 flex-col items-center justify-center overflow-y-scroll bg-white/5 text-center backdrop-blur-lg"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+        onWheel={(e) => e.currentTarget.scrollBy(0, e.deltaY)}
+      >
+        <style jsx>
+          {`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}
+        </style>
         {/* Heading */}
         <h1
           className="mb-8 text-center text-6xl font-semibold tracking-wider"
