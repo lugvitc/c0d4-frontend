@@ -1,56 +1,37 @@
-import { Orbitron, Jura } from 'next/font/google';
-
-const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap' });
-const jura = Jura({ subsets: ['latin'], weight: ['400', '700'], display: 'swap' });
-
-const categories = [
-  'OPERATING SYSTEMS',
-  'OSINT',
-  'WEB EXPLOITATION',
-  'BINARY EXPLOITATION',
-  'AND SO MUCH MORE!',
-];
-
-const Categories = () => {
+export default function Categories() {
   return (
-    <section className={`flex flex-col items-center py-16 px-6 text-white ${orbitron.className}`}>
-      <h2 className={`mb-10 text-lg text-gray-300 tracking-widest ${jura.className}`} style={{ fontSize: 26, fontWeight: 900 }}>
+    <section
+      className={`font-orbitron flex flex-col items-center px-6 py-16 text-white`}
+    >
+      <h2 className={`font-jura mb-10 text-2xl font-black tracking-widest`}>
         LEARN
       </h2>
 
-      <div className="w-full max-w-5xl grid gap-4" style={{ gridTemplateColumns: 'repeat(6, 1fr)' }}>
-        <div
-          className="bg-[#141414cc] border border-[#333] rounded-lg p-6 text-center transition-colors duration-500 transform hover:-translate-y-1 hover:border-[#00e1ff] cursor-pointer"
-          style={{ gridColumn: 'span 3/5', fontSize: 19, fontWeight: 400 }}>
+      <div className="flex w-full max-w-2xs flex-col gap-4 md:grid md:max-w-3xl md:grid-cols-6">
+        <div className="transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-6 text-center text-lg font-normal transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-3 md:col-start-2">
           OPERATING SYSTEMS
         </div>
 
-        <div
-          className="bg-[#141414cc] border border-[#333] rounded-lg p-6 text-center transition-colors duration-500 transform hover:-translate-y-1 hover:border-[#00e1ff] cursor-pointer"
-          style={{ gridColumn: 'span 1', fontSize: 19, fontWeight: 400 }}>
+        <div className="transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-6 text-center text-lg font-normal transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-1">
           OSINT
         </div>
 
-        <div
-          className="bg-[#141414cc] border border-[#333] rounded-lg p-6 text-center transition-colors duration-500 transform hover:-translate-y-1 hover:border-[#00e1ff] cursor-pointer"
-          style={{ gridColumn: 'span 3', fontSize: 19, fontWeight: 400 }}>
+        <div className="transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-6 text-center text-lg font-normal transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-3">
           WEB EXPLOITATION
         </div>
 
-        <div
-          className="bg-[#141414cc] border border-[#333] rounded-lg p-6 text-center transition-colors duration-500 transform hover:-translate-y-1 hover:border-[#00e1ff] cursor-pointer"
-          style={{ gridColumn: 'span 3', fontSize: 19, fontWeight: 400 }}>
+        <div className="transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-6 text-center text-lg font-normal transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-3">
           BINARY EXPLOITATION
         </div>
 
-        <div
-          className="bg-[#141414cc] border border-[#333] rounded-lg p-7 text-center mx-auto transition-colors duration-500 transform hover:-translate-y-1 hover:border-[#00e1ff] cursor-pointer"
-          style={{ gridColumn: 'span 6', fontSize: 18, fontWeight: 400, maxWidth: '70%' }}>
+        <div className="mx-auto w-full transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-7 text-center text-lg font-normal drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-6 md:max-w-[70%]">
           AND SO MUCH MORE!
         </div>
       </div>
+
+      <h2 className="font-orbitron mt-10 text-center font-medium tracking-wide md:text-2xl md:font-bold">
+        FULLY HANDS ON, WITH LIVE DEMOS AND REAL CTFS TO PRACTISE ON
+      </h2>
     </section>
   );
-};
-
-export default Categories;
+}
