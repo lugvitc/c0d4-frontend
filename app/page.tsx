@@ -86,6 +86,7 @@ export default function Home() {
 
       <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 font-bold uppercase">
         <div
+          id="rules"
           className="text-center text-3xl text-[#00E1FF] md:text-4xl lg:text-6xl"
           style={{
             filter:

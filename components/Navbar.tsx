@@ -23,10 +23,10 @@ export default function Navbar() {
           <HackerLink href="/signup" text="Sign Up" />
         </li>
         <li>
-          <HackerLink href="/" text="Timeline" />
+          <HackerLink href="#timeline" text="Timeline" />
         </li>
         <li>
-          <HackerLink href="/" text="Rules" />
+          <HackerLink href="#rules" text="Rules" />
         </li>
         <li>
           <HackerLink href="/leaderboard" text="Leaderboard" />
