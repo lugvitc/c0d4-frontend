@@ -24,7 +24,7 @@ export default function Categories() {
           BINARY EXPLOITATION
         </div>
 
-        <div className="mx-auto w-full transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-7 text-center text-lg font-normal drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-6 md:max-w-[70%]">
+        <div className="mx-auto w-full transform cursor-pointer rounded-lg border border-[#333] bg-[#141414cc] p-7 text-center text-lg font-normal drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] transition-colors duration-500 hover:-translate-y-1 hover:border-[#00e1ff] md:col-span-6 md:max-w-[50%]">
           AND SO MUCH MORE!
         </div>
       </div>

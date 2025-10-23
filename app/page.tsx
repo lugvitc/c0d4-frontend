@@ -1,5 +1,7 @@
+import Categories from "@/components/Categories";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -37,7 +39,10 @@ export default function Home() {
         </div>
         <div
           className="text-[#00E1FF]"
-          style={{ filter: "drop-shadow(0 0 1rem #00E1FF)" }}
+          style={{
+            filter:
+              "drop-shadow(0 0 5rem #00E1FF) drop-shadow(0 0 10rem #00E1FF)",
+          }}
         >
           <p>₹20,000+</p>
           <p
@@ -65,12 +70,71 @@ export default function Home() {
       <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 text-center font-bold uppercase">
         <div
           className="text-3xl text-[#00E1FF] md:text-4xl lg:text-6xl"
-          style={{ filter: "drop-shadow(0 0 2rem #00E1FF)" }}
+          style={{
+            filter:
+              "drop-shadow(0 0 5rem #00E1FF) drop-shadow(0 0 10rem #00E1FF)",
+          }}
         >
           Enter the world of cybersecurity
         </div>
         <div className="text-xl md:text-2xl lg:text-3xl">
           Tailor made jeopardy-style CTFs and workshops
+        </div>
+      </div>
+
+      <Categories />
+
+      <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 font-bold uppercase">
+        <div
+          id="rules"
+          className="text-center text-3xl text-[#00E1FF] md:text-4xl lg:text-6xl"
+          style={{
+            filter:
+              "drop-shadow(0 0 2rem #00E1FF) drop-shadow(0 0 5rem #00E1FF)",
+          }}
+        >
+          The Rules
+        </div>
+        <div className="flex justify-center p-5 text-xl md:text-2xl lg:text-3xl">
+          <ol className="flex list-decimal flex-col gap-3">
+            <li>Tailor made jeopardy-style CTFs and workshops</li>
+            <li>Hands-on experience with real-world scenarios</li>
+            <li>Collaboration with industry experts</li>
+            <li>Networking opportunities with peers</li>
+          </ol>
+        </div>
+      </div>
+      <div
+        id="timeline"
+        className="font-jura my-20 text-center text-3xl font-bold text-[#00E1FF] uppercase md:text-4xl lg:text-6xl"
+        style={{
+          filter: "drop-shadow(0 0 2rem #00E1FF) drop-shadow(0 0 5rem #00E1FF)",
+        }}
+      >
+        The Timeline
+      </div>
+      <div className="p-52"></div>
+
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Image
+          src="/title-card.svg"
+          alt="Cyber-0-Day 4.0 Title Card"
+          width={1000}
+          height={200}
+        />
+        <div
+          className="font-orbitron rounded-lg border-2 border-[#00E1FF] text-2xl text-[#00E1FF] uppercase transition-all duration-200 hover:bg-[#00E1FF] hover:text-black"
+          style={{
+            filter:
+              "drop-shadow(0 0 1rem #FFFFFF) drop-shadow(0 0 2rem #FFFFFF)",
+          }}
+        >
+          <div className="px-8 py-1">
+            <Link href="/signup">Register</Link>
+          </div>
+        </div>
+        <div className="m-10 max-w-2xs text-center text-2xl font-bold">
+          Don&apos;t miss the ultimate hacking experience of the year
         </div>
       </div>
     </div>
