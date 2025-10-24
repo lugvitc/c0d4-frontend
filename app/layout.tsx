@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-p-32 md:scroll-p-20">
       <body
         className={`${kodeMono.variable} ${jura.variable} ${orbitron.variable} antialiased`}
       >

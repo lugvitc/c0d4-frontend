@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
 
   const menuItems = [
     { href: "/signup", text: "Sign Up" },
@@ -24,10 +25,15 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
+      setIsAtTop(currentScrollY < 50);
+
       if (currentScrollY < threshold) {
         setIsDesktopCollapsed(false);
         setIsDesktopExpanded(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+        setIsDesktopCollapsed(true);
+        setIsDesktopExpanded(false);
+      } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
         setIsDesktopCollapsed(true);
         setIsDesktopExpanded(false);
       }
@@ -49,7 +55,7 @@ export default function Navbar() {
         <div
           className={`relative flex flex-col items-center justify-between py-8 transition-all duration-500 ease-in-out ${
             isDesktopCollapsed && !isDesktopExpanded ? "px-4" : "px-6"
-          }`}
+          } ${!isAtTop && !(isDesktopCollapsed && !isDesktopExpanded) ? "backdrop-blur-sm" : "backdrop-blur-none"}`}
         >
           <div className="absolute top-0 right-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#00E1FF] to-transparent opacity-50"></div>
 
@@ -143,7 +149,11 @@ export default function Navbar() {
       </nav>
 
       <nav className="fixed top-0 right-0 left-0 z-50 lg:hidden">
-        <div className="relative border-b border-[#00E1FF]/20 bg-[#0a0a0a]/80 backdrop-blur-md">
+        <div
+          className={`relative border-b border-[#00E1FF]/20 backdrop-blur-md transition-colors duration-300 ${
+            isAtTop ? "bg-transparent" : "bg-[#0a0a0a]/40"
+          }`}
+        >
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-3">
               <Image
