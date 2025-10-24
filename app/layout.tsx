@@ -1,3 +1,4 @@
+import BackgroundVideo from "@/components/BackgroundVideo";
 import type { Metadata } from "next";
 import { Jura, Kode_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
@@ -32,14 +33,7 @@ export default function RootLayout({
       <body
         className={`${kodeMono.variable} ${jura.variable} ${orbitron.variable} antialiased`}
       >
-        <video
-          className="absolute -z-10 h-full w-full object-cover blur-sm"
-          autoPlay
-          loop
-          muted
-        >
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
+        <BackgroundVideo />
         {children}
       </body>
     </html>
