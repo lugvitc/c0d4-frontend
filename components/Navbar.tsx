@@ -1,14 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import HackerLink from "./HackerText";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
-  const [isDesktopExpanded, setIsDesktopExpanded] = useState(true);
+  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(true);
+  const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (isHomePage) {
+      setIsDesktopCollapsed(false);
+      setIsDesktopExpanded(true);
+    }
+  }, [isHomePage]);
 
   const menuItems = [
     { href: "/signup", text: "Sign Up" },
@@ -19,6 +32,8 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
+    if (!isMounted) return;
+
     let lastScrollY = window.scrollY;
     const threshold = 100;
 
@@ -27,15 +42,28 @@ export default function Navbar() {
 
       setIsAtTop(currentScrollY < 50);
 
-      if (currentScrollY < threshold) {
-        setIsDesktopCollapsed(false);
-        setIsDesktopExpanded(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
-        setIsDesktopCollapsed(true);
-        setIsDesktopExpanded(false);
-      } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
-        setIsDesktopCollapsed(true);
-        setIsDesktopExpanded(false);
+      if (isHomePage) {
+        if (currentScrollY < threshold) {
+          setIsDesktopCollapsed(false);
+          setIsDesktopExpanded(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        }
+      } else {
+        if (currentScrollY < threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        }
       }
 
       lastScrollY = currentScrollY;
@@ -43,7 +71,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage, isMounted]);
 
   const toggleDesktopMenu = () => {
     setIsDesktopExpanded(!isDesktopExpanded);
@@ -54,8 +82,8 @@ export default function Navbar() {
       <nav className="fixed top-0 right-0 z-50 hidden h-screen lg:flex">
         <div
           className={`relative flex flex-col items-center justify-between py-8 transition-all duration-500 ease-in-out ${
-            isDesktopCollapsed && !isDesktopExpanded ? "px-4" : "px-6"
-          } ${!isAtTop && !(isDesktopCollapsed && !isDesktopExpanded) ? "backdrop-blur-sm" : "backdrop-blur-none"}`}
+            isDesktopCollapsed && !isDesktopExpanded ? "px-0" : "px-6"
+          } ${!isHomePage || (!isAtTop && !(isDesktopCollapsed && !isDesktopExpanded)) ? "backdrop-blur-sm" : "backdrop-blur-none"} ${!isMounted ? "opacity-0" : "opacity-100"}`}
         >
           <div className="absolute top-0 right-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#00E1FF] to-transparent opacity-50"></div>
 
@@ -84,6 +112,36 @@ export default function Navbar() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div
+            className={`absolute top-1/2 right-4 -translate-y-1/2 transition-all duration-500 ${
+              isDesktopExpanded && !(isHomePage && isAtTop)
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0"
+            }`}
+          >
+            <button
+              onClick={toggleDesktopMenu}
+              className="group relative flex h-12 w-12 items-center justify-center"
+              aria-label="Collapse menu"
+            >
+              <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-20 blur-lg transition-opacity group-hover:opacity-40"></div>
+
+              <svg
+                className="relative z-10 h-6 w-6 text-[#00E1FF] transition-transform group-hover:scale-110"
+                fill="none"
+                strokeWidth="2"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
                 />
               </svg>
             </button>
@@ -150,9 +208,7 @@ export default function Navbar() {
 
       <nav className="fixed top-0 right-0 left-0 z-50 lg:hidden">
         <div
-          className={`relative border-b border-[#00E1FF]/20 backdrop-blur-md transition-colors duration-300 ${
-            isAtTop ? "bg-transparent" : "bg-[#0a0a0a]/40"
-          }`}
+          className={`relative border-b border-[#00E1FF]/20 bg-transparent backdrop-blur-md transition-colors duration-300`}
         >
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-3">
