@@ -1,4 +1,5 @@
 import Categories from "@/components/Categories";
+import Timeline from "@/components/Timeline";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -111,7 +112,7 @@ export default function Home() {
       >
         The Timeline
       </div>
-      <div className="p-52"></div>
+      <Timeline />
 
       <div className="flex flex-col items-center justify-center gap-2">
         <Image
