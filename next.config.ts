@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: "/c0d4-frontend",
+  basePath: "/",
 };
 
 export default nextConfig;
