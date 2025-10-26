@@ -10,6 +10,7 @@ export default function Navbar() {
   const isHomePage = pathname === "/";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(true);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +18,7 @@ export default function Navbar() {
   useEffect(() => {
     setIsMounted(true);
     if (isHomePage) {
+      setIsDesktopCollapsed(false);
       setIsDesktopExpanded(true);
     }
   }, [isHomePage]);
@@ -37,12 +39,29 @@ export default function Navbar() {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+
       setIsAtTop(currentScrollY < 50);
 
       if (isHomePage) {
         if (currentScrollY < threshold) {
+          setIsDesktopCollapsed(false);
           setIsDesktopExpanded(true);
-        } else if (currentScrollY > lastScrollY) {
+        } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        }
+      } else {
+        if (currentScrollY < threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
+          setIsDesktopExpanded(false);
+        } else if (currentScrollY < lastScrollY && currentScrollY > threshold) {
+          setIsDesktopCollapsed(true);
           setIsDesktopExpanded(false);
         }
       }
@@ -58,31 +77,21 @@ export default function Navbar() {
     setIsDesktopExpanded(!isDesktopExpanded);
   };
 
-  const shouldShowBlur = !isHomePage || !isAtTop;
-
   return (
     <>
       <nav className="fixed top-0 right-0 z-50 hidden h-screen lg:flex">
         <div
           className={`relative flex flex-col items-center justify-between py-8 transition-all duration-500 ease-in-out ${
-            isDesktopExpanded ? "w-[280px] px-6" : "w-[80px] px-0"
-          } ${!isMounted ? "opacity-0" : "opacity-100"}`}
+            isDesktopCollapsed && !isDesktopExpanded ? "px-0" : "px-6"
+          } ${!isHomePage || (!isAtTop && !(isDesktopCollapsed && !isDesktopExpanded)) ? "backdrop-blur-sm" : "backdrop-blur-none"} ${!isMounted ? "opacity-0" : "opacity-100"}`}
         >
-          <div
-            className={`absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-500 ${
-              isDesktopExpanded ? "opacity-100" : "opacity-0"
-            }`}
-          ></div>
-
-          <div
-            className={`absolute top-0 right-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#00E1FF] to-transparent opacity-50 ${!isDesktopExpanded ? "opacity-0" : ""}`}
-          ></div>
+          <div className="absolute top-0 right-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#00E1FF] to-transparent opacity-50"></div>
 
           <div
             className={`absolute top-1/2 right-4 -translate-y-1/2 transition-all duration-500 ${
-              !isDesktopExpanded
-                ? "pointer-events-auto scale-100 opacity-100"
-                : "pointer-events-none scale-75 opacity-0"
+              isDesktopCollapsed && !isDesktopExpanded
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0"
             }`}
           >
             <button
@@ -90,6 +99,8 @@ export default function Navbar() {
               className="group relative flex h-12 w-12 items-center justify-center"
               aria-label="Expand menu"
             >
+              <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-20 blur-lg transition-opacity group-hover:opacity-40"></div>
+
               <svg
                 className="relative z-10 h-6 w-6 text-[#00E1FF] transition-transform group-hover:scale-110"
                 fill="none"
@@ -109,8 +120,8 @@ export default function Navbar() {
           <div
             className={`absolute top-1/2 right-4 -translate-y-1/2 transition-all duration-500 ${
               isDesktopExpanded && !(isHomePage && isAtTop)
-                ? "pointer-events-auto scale-100 opacity-100"
-                : "pointer-events-none scale-75 opacity-0"
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0"
             }`}
           >
             <button
@@ -119,6 +130,7 @@ export default function Navbar() {
               aria-label="Collapse menu"
             >
               <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-20 blur-lg transition-opacity group-hover:opacity-40"></div>
+
               <svg
                 className="relative z-10 h-6 w-6 text-[#00E1FF] transition-transform group-hover:scale-110"
                 fill="none"
@@ -135,39 +147,46 @@ export default function Navbar() {
             </button>
           </div>
 
-          <div className="flex flex-col items-center gap-4 transition-all duration-500">
+          <div
+            className={`flex flex-col items-center gap-4 transition-all duration-500 ${
+              isDesktopCollapsed && !isDesktopExpanded
+                ? "pointer-events-none h-0 w-0 scale-95 overflow-hidden opacity-0"
+                : "pointer-events-auto scale-100 opacity-100"
+            }`}
+          >
             <div className="group relative">
               <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30"></div>
               <Image
                 src="/neon_penguin.svg"
                 alt="Penguin Logo"
-                width={isDesktopExpanded ? 100 : 60}
-                height={isDesktopExpanded ? 100 : 60}
+                width={100}
+                height={100}
                 priority
-                className="relative drop-shadow-[0_0_15px_rgba(0,225,255,0.3)] transition-all duration-500 hover:scale-105"
+                className="relative drop-shadow-[0_0_15px_rgba(0,225,255,0.3)] transition-transform duration-500 hover:scale-105"
               />
             </div>
 
-            <div
-              className={`relative overflow-hidden text-center text-xl font-bold tracking-[0.3em] whitespace-nowrap text-[#E0E0E0] transition-all duration-500 ${
-                isDesktopExpanded
-                  ? "max-w-full opacity-100"
-                  : "max-w-0 opacity-0"
-              }`}
-            >
+            <div className="relative text-center text-xl font-bold tracking-[0.3em] text-[#E0E0E0]">
               <span className="relative z-10">LUGVITC.NET</span>
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-[#00E1FF] to-transparent opacity-20 blur-sm"></div>
             </div>
           </div>
 
           <ul
-            className={`flex list-none flex-col gap-8 overflow-hidden p-0 transition-all duration-500 ${
-              isDesktopExpanded
-                ? "pointer-events-auto max-h-[500px] scale-100 opacity-100"
-                : "pointer-events-none max-h-0 scale-75 opacity-0"
+            className={`flex list-none flex-col gap-8 p-0 transition-all duration-500 ${
+              isDesktopCollapsed && !isDesktopExpanded
+                ? "pointer-events-none h-0 w-0 scale-95 overflow-hidden opacity-0"
+                : "pointer-events-auto scale-100 opacity-100"
             }`}
           >
             {menuItems.map((item, index) => (
-              <li key={item.href} className="group relative whitespace-nowrap">
+              <li
+                key={item.href}
+                className="group relative"
+                style={{
+                  animation: `fadeInRight 0.5s ease-out ${index * 0.1}s backwards`,
+                }}
+              >
                 <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
                 <HackerLink href={item.href} text={item.text} />
               </li>
@@ -175,10 +194,10 @@ export default function Navbar() {
           </ul>
 
           <div
-            className={`flex flex-col items-center gap-2 overflow-hidden transition-all duration-500 ${
-              isDesktopExpanded
-                ? "pointer-events-auto max-h-[100px] scale-100 opacity-100"
-                : "pointer-events-none max-h-0 scale-75 opacity-0"
+            className={`flex flex-col items-center gap-2 transition-all duration-500 ${
+              isDesktopCollapsed && !isDesktopExpanded
+                ? "pointer-events-none h-0 w-0 scale-95 overflow-hidden opacity-0"
+                : "pointer-events-auto scale-100 opacity-100"
             }`}
           >
             <div className="h-16 w-[1px] bg-gradient-to-b from-[#00E1FF] to-transparent"></div>
@@ -188,7 +207,9 @@ export default function Navbar() {
       </nav>
 
       <nav className="fixed top-0 right-0 left-0 z-50 lg:hidden">
-        <div className="relative border-b border-[#00E1FF]/20 bg-black/10 backdrop-blur-md">
+        <div
+          className={`relative border-b border-[#00E1FF]/20 bg-transparent backdrop-blur-md transition-colors duration-300`}
+        >
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-3">
               <Image

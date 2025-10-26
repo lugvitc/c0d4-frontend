@@ -1,5 +1,4 @@
 import Categories from "@/components/Categories";
-import Navbar from "@/components/Navbar";
 import Timeline from "@/components/Timeline";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +6,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="relative">
-      <Navbar />
       <div className="pointer-events-none absolute top-[75vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-transparent to-[#0088DC61]"></div>
 
       <div className="pointer-events-none absolute top-[100vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-[#0088DC61] to-transparent"></div>

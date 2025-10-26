@@ -1,4 +1,5 @@
 import BackgroundVideo from "@/components/BackgroundVideo";
+import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Jura, Kode_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
@@ -34,6 +35,7 @@ export default function RootLayout({
         className={`${kodeMono.variable} ${jura.variable} ${orbitron.variable} antialiased`}
       >
         <BackgroundVideo />
+        <Navbar />
         {children}
       </body>
     </html>
