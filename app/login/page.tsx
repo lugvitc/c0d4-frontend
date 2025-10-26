@@ -1,15 +1,95 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("team");
+    setError("");
+    setIsLoading(true);
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const teamName = formData.get("teamName") as string;
+    const password = formData.get("password") as string;
+
+    if (!teamName || !password) {
+      setError("Please fill in all fields");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://dev.lugvitc.net/api/auth/login",
+        {
+          name: teamName,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      const data = response.data;
+
+      if (data.access_token) {
+        localStorage.setItem("authToken", data.access_token);
+        router.push("/challenges");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+
+      if (axios.isAxiosError(err) && err.response) {
+        const status = err.response.status;
+        const errorData = err.response.data;
+
+        switch (status) {
+          case 401:
+            setError(
+              errorData.detail ||
+                "Invalid credentials. Please check your team name and password.",
+            );
+            break;
+          case 404:
+            setError(
+              errorData.detail ||
+                "Team not found. Please check your team name.",
+            );
+            break;
+          case 422:
+            setError(
+              errorData.detail ||
+                "Invalid input. Please check your credentials.",
+            );
+            break;
+          case 500:
+            setError("Server error. Please try again later.");
+            break;
+          default:
+            setError(
+              errorData.detail ||
+                errorData.message ||
+                "Login failed. Please try again.",
+            );
+        }
+      } else {
+        setError("Network error. Please check your connection and try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,13 +131,21 @@ export default function SignIn() {
           method="POST"
           onSubmit={handleSubmit}
         >
+          {error && (
+            <div
+              className="w-[400px] rounded-lg border-2 border-red-500 bg-red-500/10 px-4 py-2 text-center text-red-500"
+              style={{ fontFamily: "var(--font-jura)" }}
+            >
+              {error}
+            </div>
+          )}
+
           <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
+            name="teamName"
+            placeholder="Team Name"
             className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
             style={{ fontFamily: "var(--font-jura)", width: "400px" }}
-            autoComplete="email"
+            disabled={isLoading}
           />
           <input
             type="password"
@@ -65,18 +153,20 @@ export default function SignIn() {
             placeholder="Password"
             className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
             style={{ fontFamily: "var(--font-jura)", width: "400px" }}
+            disabled={isLoading}
           />
 
           <button
             type="submit"
-            className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black"
+            disabled={isLoading}
+            className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             style={{
               fontFamily: "var(--font-orbitron)",
               width: "400px",
               fontWeight: "700",
             }}
           >
-            Sign In
+            {isLoading ? "Signing In..." : "Sign In"}
           </button>
 
           <div className="mt-4 -ml-4 text-center">
