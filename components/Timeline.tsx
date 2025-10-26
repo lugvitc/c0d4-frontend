@@ -146,7 +146,9 @@ export default function Timeline() {
                 {/*  Dot */}
                 {!isBreak ? (
                   <div
-                    ref={(el) => (dotRefs.current[index] = el)}
+                    ref={(el) => {
+                      dotRefs.current[index] = el;
+                    }}
                     className="absolute left-8 -translate-x-1/2 md:left-1/2"
                   >
                     <div className="relative h-4 w-4 rounded-full border-2 border-[#00E1FF] bg-black shadow-[0_0_10px_rgba(0,225,255,0.5)]">
