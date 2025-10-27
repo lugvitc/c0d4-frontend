@@ -24,7 +24,10 @@ export default function Home() {
         <p>Biggest Hackathon</p>
       </div>
 
-      <div className="font-jura flex justify-center gap-10 py-20 text-center text-2xl font-bold tracking-tight md:gap-20 md:text-4xl lg:gap-96 lg:text-5xl">
+      <div
+        id="prizes"
+        className="font-jura flex justify-center gap-10 py-20 text-center text-2xl font-bold tracking-tight md:gap-20 md:text-4xl lg:gap-96 lg:text-5xl"
+      >
         <div>
           <p>200+</p>
           <p

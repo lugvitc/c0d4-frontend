@@ -21,10 +21,10 @@ export default function Navbar() {
 
   const menuItems = [
     { href: "/signup", text: "Sign Up" },
-    { href: "#timeline", text: "Timeline" },
-    { href: "#rules", text: "Rules" },
+    { href: "/#timeline", text: "Timeline" },
+    { href: "/#rules", text: "Rules" },
     { href: "/leaderboard", text: "Leaderboard" },
-    { href: "/", text: "Prizes" },
+    { href: "/#prizes", text: "Prizes" },
   ];
 
   useEffect(() => {
