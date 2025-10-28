@@ -104,19 +104,19 @@ export default function SignIn() {
         lugvitc.net
       </Link>
 
-      <div className="absolute right-10 bottom-4">
+      <div className="absolute right-4 bottom-4 md:right-10 md:bottom-4">
         <Image
           src="/title-card.svg"
           alt="Title Card"
           width={500}
-          height={105}
+          height={150}
           className=""
         />
       </div>
 
-      <div className="no-scrollbar absolute top-0 left-0 flex h-full w-1/2 flex-col items-center justify-center overflow-y-scroll bg-white/5 text-center backdrop-blur-lg">
+      <div className="no-scrollbar absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center overflow-y-scroll bg-transparent text-center backdrop-blur-none md:w-1/2 md:bg-white/5 md:backdrop-blur-lg">
         <h1
-          className="mb-8 text-center text-6xl font-semibold tracking-wider"
+          className="mb-8 text-center text-4xl font-semibold tracking-wider sm:text-5xl md:text-6xl"
           style={{
             fontFamily: "var(--font-orbitron)",
             textShadow:
@@ -127,7 +127,7 @@ export default function SignIn() {
         </h1>
 
         <form
-          className="flex flex-col items-center justify-center gap-4"
+          className="flex w-full max-w-md flex-col items-center justify-center gap-4 px-4"
           method="POST"
           onSubmit={handleSubmit}
         >
@@ -143,26 +143,25 @@ export default function SignIn() {
           <input
             name="teamName"
             placeholder="Team Name"
-            className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
-            style={{ fontFamily: "var(--font-jura)", width: "400px" }}
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            style={{ fontFamily: "var(--font-jura)" }}
             disabled={isLoading}
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none"
-            style={{ fontFamily: "var(--font-jura)", width: "400px" }}
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            style={{ fontFamily: "var(--font-jura)" }}
             disabled={isLoading}
           />
 
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-4 cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-4 w-[300px] cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50 md:w-[400px]"
             style={{
               fontFamily: "var(--font-orbitron)",
-              width: "400px",
               fontWeight: "700",
             }}
           >
