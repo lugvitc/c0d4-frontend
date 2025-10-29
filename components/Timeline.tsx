@@ -13,25 +13,19 @@ const events: TimelineEvent[] = [
   {
     time: "10:00 TO 10:45",
     title: "LINUX BASICS",
-    instructor: "BY JOHN DOE",
-    tag: "WORKSHOP",
-  },
-  {
-    time: "10:00 TO 11:00",
-    title: "WEB EXPLOITATION",
-    instructor: "BY JOHN DOE",
+    instructor: "BY SUGEETH JAYARAJ",
     tag: "WORKSHOP",
   },
   {
     time: "10:50 TO 11:35",
     title: "FORENSICS",
-    instructor: "BY JOHN DOE",
+    instructor: "BY KASHYAP MP",
     tag: "WORKSHOP",
   },
   {
     time: "11:40 TO 12:25",
-    title: "OSINT",
-    instructor: "BY JOHN DOE",
+    title: "BINARY EXPLOITATION",
+    instructor: "BY SIDDHARTH KARANAM",
     tag: "WORKSHOP",
   },
   {
@@ -43,25 +37,19 @@ const events: TimelineEvent[] = [
   {
     time: "14:00 TO 14:45",
     title: "WEB EXPLOITATION",
-    instructor: "BY JOHN DOE",
+    instructor: "BY AADIVISHNU GAJENDRA",
     tag: "WORKSHOP",
   },
   {
     time: "14:50 TO 15:35",
     title: "REVERSING",
-    instructor: "BY JOHN DOE",
+    instructor: "BY RAHUL RAJITH",
     tag: "WORKSHOP",
   },
   {
     time: "15:40 TO 16:25",
     title: "OSINT",
-    instructor: "BY JOHN DOE",
-    tag: "WORKSHOP",
-  },
-  {
-    time: "16:30 TO 17:15",
-    title: "ANDROID",
-    instructor: "BY JOHN DOE",
+    instructor: "BY PREETHAM PEMMASANI",
     tag: "WORKSHOP",
   },
 ];
@@ -109,7 +97,7 @@ export default function Timeline() {
       <div className="mb-12 flex items-center gap-4">
         <div className="h-px flex-1 bg-[#00E1FF]/20"></div>
         <span className="font-orbitron text-sm font-bold tracking-wider text-[#00E1FF]/70 uppercase">
-          30 OCTOBER
+          1st November
         </span>
         <div className="h-px flex-1 bg-[#00E1FF]/20"></div>
       </div>

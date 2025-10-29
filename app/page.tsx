@@ -21,7 +21,7 @@ export default function Home() {
 
       <div className="font-jura my-20 flex flex-col justify-center gap-3 text-center text-3xl font-bold uppercase md:my-32 md:text-5xl lg:text-7xl">
         <p>VIT Chennai&apos;s</p>
-        <p>Biggest Hackathon</p>
+        <p>Biggest CyberSecurity Event</p>
       </div>
 
       <div
@@ -80,7 +80,8 @@ export default function Home() {
           Enter the world of cybersecurity
         </div>
         <div className="text-xl md:text-2xl lg:text-3xl">
-          Tailor made jeopardy-style CTFs and workshops
+          Tailor made jeopardy-style CTFs and workshops from Pentathon
+          Finalists!
         </div>
       </div>
 
@@ -97,12 +98,19 @@ export default function Home() {
         >
           The Rules
         </div>
-        <div className="flex justify-center p-5 text-xl md:text-2xl lg:text-3xl">
-          <ol className="flex list-decimal flex-col gap-3">
-            <li>Tailor made jeopardy-style CTFs and workshops</li>
-            <li>Hands-on experience with real-world scenarios</li>
-            <li>Collaboration with industry experts</li>
-            <li>Networking opportunities with peers</li>
+        <div className="mx-auto flex max-w-5xl justify-center p-5 text-xl md:text-2xl lg:text-3xl">
+          <ol className="flex w-full list-decimal flex-col gap-3 text-left">
+            <li>Offline Overnight Jeopardy-style CTF</li>
+            <li>
+              Categories: Web, OSINT, Binary, Reversing, Forensics,
+              Cryptography, Miscellaneous
+            </li>
+            <li>Flag format: c0d&#123;__&#125;</li>
+            <li>
+              Teams of upto 3 members can be formed on the day of the event
+            </li>
+            <li>Points will be dynamic depending on number of solves</li>
+            <li>Flag sharing is not permitted (Good luck doing that ;)</li>
           </ol>
         </div>
       </div>
