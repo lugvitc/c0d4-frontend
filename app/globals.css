@@ -5,8 +5,8 @@ html {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -15,13 +15,6 @@ html {
   --font-mono: var(--font-kode-mono);
   --font-jura: var(--font-jura);
   --font-orbitron: var(--font-orbitron);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
