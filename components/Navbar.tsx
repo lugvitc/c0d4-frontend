@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HackerLink from "./HackerText";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,9 +15,25 @@ export default function Navbar() {
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(isHomePage);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const syncAuth = () => {
+      const storageToken = localStorage.getItem("authToken");
+      setIsAuthenticated(Boolean(storageToken));
+    };
+    syncAuth();
+    window.addEventListener("auth-changed", syncAuth);
+    window.addEventListener("storage", syncAuth);
+    return () => {
+      window.removeEventListener("auth-changed", syncAuth);
+      window.removeEventListener("storage", syncAuth);
+    };
   }, []);
 
   useEffect(() => {
@@ -35,13 +52,20 @@ export default function Navbar() {
     setIsMenuOpen(false);
   }, [pathname, isHomePage]);
 
-  const menuItems = [
-    { href: "/signup", text: "Sign Up" },
+  const baseMenuItems = [
+    { href: "/signup", text: "Sign Up", hideWhenAuth: true },
+    { href: "/login", text: "Login", hideWhenAuth: true },
+    { href: "/challenges", text: "Challenges", requiresAuth: true },
     { href: "/#timeline", text: "Timeline" },
     { href: "/#rules", text: "Rules" },
-    { href: "/leaderboard", text: "Leaderboard" },
     { href: "/#prizes", text: "Prizes" },
+    { href: "/leaderboard", text: "Leaderboard" },
   ];
+  const menuItems = baseMenuItems.filter((item) => {
+    if (item.requiresAuth) return isAuthenticated;
+    if (item.hideWhenAuth) return !isAuthenticated;
+    return true;
+  });
 
   useEffect(() => {
     if (!isMounted) return;
@@ -87,6 +111,14 @@ export default function Navbar() {
 
   const toggleDesktopMenu = () => {
     setIsDesktopExpanded(!isDesktopExpanded);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    window.dispatchEvent(new Event("auth-changed"));
+    setIsAuthenticated(false);
+    setIsMenuOpen(false);
+    router.push("/login");
   };
 
   return (
@@ -212,6 +244,14 @@ export default function Navbar() {
                 <HackerLink href={item.href} text={item.text} />
               </li>
             ))}
+            {isAuthenticated && (
+              <li className="group relative whitespace-nowrap">
+                <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
+                <button onClick={handleLogout}>
+                  <HackerLink href="" text="Logout" />
+                </button>
+              </li>
+            )}
           </ul>
 
           <div
@@ -284,6 +324,17 @@ export default function Navbar() {
                   <HackerLink href={item.href} text={item.text} />
                 </li>
               ))}
+              {isAuthenticated && (
+                <li
+                  className="border-l-2 border-transparent pl-4 transition-all hover:border-[#00E1FF]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
+                  <button onClick={handleLogout}>
+                    <HackerLink href="" text="Logout" />
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

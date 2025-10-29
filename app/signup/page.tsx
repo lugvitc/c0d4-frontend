@@ -3,9 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SignUp() {
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (localStorage.getItem("authToken")) {
+      router.replace("/challenges");
+    }
+  }, [router]);
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();

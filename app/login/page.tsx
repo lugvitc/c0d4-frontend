@@ -4,12 +4,19 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (localStorage.getItem("authToken")) {
+      router.replace("/challenges");
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +51,7 @@ export default function SignIn() {
 
       if (data.access_token) {
         localStorage.setItem("authToken", data.access_token);
+        window.dispatchEvent(new Event("auth-changed"));
         router.push("/challenges");
       } else {
         setError("Login failed. Please try again.");
