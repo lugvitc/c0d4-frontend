@@ -268,13 +268,13 @@ export default function ChallengesPage() {
             </div>
             <div className="mt-6 flex flex-col gap-3 md:flex-row md:justify-center">
               <Link
-                href="/login"
+                href="/auth/login"
                 className="font-orbitron rounded-lg border border-[#00E1FF] bg-[#00E1FF]/10 px-6 py-2 text-[#00E1FF] transition hover:bg-[#00E1FF]/30 hover:text-black"
               >
                 Sign In
               </Link>
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="font-orbitron rounded-lg border border-white/40 px-6 py-2 text-white transition hover:border-white hover:bg-white hover:text-black"
               >
                 Sign Up

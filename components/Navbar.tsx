@@ -54,8 +54,8 @@ export default function Navbar() {
   }, [pathname, isHomePage]);
 
   const baseMenuItems = [
-    { href: "/signup", text: "Sign Up", hideWhenAuth: true },
-    { href: "/login", text: "Login", hideWhenAuth: true },
+    { href: "/auth/signup", text: "Sign Up", hideWhenAuth: true },
+    { href: "/auth/login", text: "Login", hideWhenAuth: true },
     { href: "/#prizes", text: "Prizes" },
     { href: "/#rules", text: "Rules" },
     { href: "/#timeline", text: "Timeline" },
