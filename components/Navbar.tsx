@@ -53,14 +53,17 @@ export default function Navbar() {
     setIsMenuOpen(false);
   }, [pathname, isHomePage]);
 
-  const baseMenuItems = [
-    { href: "/signup", text: "Sign Up", hideWhenAuth: true },
-    { href: "/login", text: "Login", hideWhenAuth: true },
-    { href: "/challenges", text: "Challenges", requiresAuth: true },
-    { href: "/#timeline", text: "Timeline" },
-    { href: "/#rules", text: "Rules" },
+  type MenuItem = {
+    href: string;
+    text: string;
+    requiresAuth?: boolean;
+    hideWhenAuth?: boolean;
+  };
+
+  const baseMenuItems: MenuItem[] = [
     { href: "/#prizes", text: "Prizes" },
-    { href: "/leaderboard", text: "Leaderboard" },
+    { href: "/#rules", text: "Rules" },
+    { href: "/#timeline", text: "Timeline" },
   ];
   const menuItems = baseMenuItems.filter((item) => {
     if (item.requiresAuth) return isAuthenticated;
