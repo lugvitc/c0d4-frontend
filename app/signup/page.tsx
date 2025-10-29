@@ -22,16 +22,6 @@ export default function SignUp() {
 
   return (
     <div className="relative flex min-h-screen flex-col items-start justify-center px-32 py-8">
-      <Link
-        href="https://lugvitc.net"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute top-8 right-8 text-lg text-[#00E1FF] transition-colors duration-300 hover:text-white"
-        style={{ fontFamily: "var(--font-jura)" }}
-      >
-        lugvitc.net
-      </Link>
-
       <div className="absolute right-4 bottom-4 md:right-10 md:bottom-4">
         <Image
           src="/title-card.svg"
@@ -63,21 +53,21 @@ export default function SignUp() {
             type="text"
             name="userName"
             placeholder="Name"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-slate-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
           />
           <input
             type="text"
             name="regNo"
             placeholder="Registration Number"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-slate-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
           />
           <input
             type="email"
             name="email"
             placeholder="Email Address"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-slate-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
             autoComplete="email"
           />
@@ -85,7 +75,7 @@ export default function SignUp() {
             type="password"
             name="password"
             placeholder="Password"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-slate-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
           />
 
@@ -102,7 +92,7 @@ export default function SignUp() {
 
           <div className="mt-4 -ml-4 text-center">
             <span
-              className="text-gray-400"
+              className="text-gray-800/20 md:text-gray-400"
               style={{ fontFamily: "var(--font-jura)" }}
             >
               Already have an account?

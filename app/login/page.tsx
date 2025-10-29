@@ -102,16 +102,6 @@ export default function SignIn() {
 
   return (
     <div className="relative flex min-h-screen flex-col items-start justify-center px-32 py-8">
-      <Link
-        href="https://lugvitc.net"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute top-8 right-8 text-lg text-[#00E1FF] transition-colors duration-300 hover:text-white"
-        style={{ fontFamily: "var(--font-jura)" }}
-      >
-        lugvitc.net
-      </Link>
-
       <div className="absolute right-4 bottom-4 md:right-10 md:bottom-4">
         <Image
           src="/title-card.svg"
@@ -151,7 +141,7 @@ export default function SignIn() {
           <input
             name="teamName"
             placeholder="Team Name"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
             disabled={isLoading}
           />
@@ -159,7 +149,7 @@ export default function SignIn() {
             type="password"
             name="password"
             placeholder="Password"
-            className="w-[300px] rounded-lg border-2 border-gray-600 bg-transparent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px]"
+            className="w-[300px] rounded-lg border-2 border-gray-600 bg-gray-800/20 px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none md:w-[400px] md:bg-transparent"
             style={{ fontFamily: "var(--font-jura)" }}
             disabled={isLoading}
           />
@@ -167,7 +157,7 @@ export default function SignIn() {
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-4 w-[300px] cursor-pointer rounded-lg border border-white bg-transparent px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50 md:w-[400px]"
+            className="mt-4 w-[300px] cursor-pointer rounded-lg border border-white bg-gray-800/20 px-6 py-2 font-black text-white transition-all duration-300 hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50 md:w-[400px] md:bg-transparent"
             style={{
               fontFamily: "var(--font-orbitron)",
               fontWeight: "700",
@@ -178,7 +168,7 @@ export default function SignIn() {
 
           <div className="mt-4 -ml-4 text-center">
             <span
-              className="text-gray-400"
+              className="text-gray-800/20 md:text-gray-400"
               style={{ fontFamily: "var(--font-jura)" }}
             >
               Don&apos;t have an account?
@@ -190,16 +180,6 @@ export default function SignIn() {
                 Sign Up
               </Link>
             </span>
-          </div>
-
-          <div className="mt-2 -ml-4 text-center">
-            <Link
-              href="#"
-              className="text-gray-400 underline transition-colors duration-300 hover:text-white"
-              style={{ fontFamily: "var(--font-jura)" }}
-            >
-              Forgot your password?
-            </Link>
           </div>
         </form>
       </div>

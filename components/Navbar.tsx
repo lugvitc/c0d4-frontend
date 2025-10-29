@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HackerLink from "./HackerText";
@@ -66,6 +67,22 @@ export default function Navbar() {
     if (item.hideWhenAuth) return !isAuthenticated;
     return true;
   });
+  const showExpandHint = isMounted && isDesktopCollapsed && !isDesktopExpanded;
+  const mobileBrandContent = (
+    <>
+      <Image
+        src="/neon_penguin.svg"
+        alt="Penguin Logo"
+        width={30}
+        height={30}
+        priority
+        className="drop-shadow-[0_0_10px_rgba(0,225,255,0.3)]"
+      />
+      <span className="text-sm font-bold tracking-widest text-[#E0E0E0] md:text-base">
+        LUGVITC.NET
+      </span>
+    </>
+  );
 
   useEffect(() => {
     if (!isMounted) return;
@@ -152,12 +169,13 @@ export default function Navbar() {
           >
             <button
               onClick={toggleDesktopMenu}
-              className="group relative flex h-12 w-12 items-center justify-center"
+              className="group relative flex h-12 w-12 items-center justify-center rounded-full border border-[#00E1FF]/60 bg-black/70 shadow-[0_0_20px_rgba(0,225,255,0.35)]"
               aria-label="Expand menu"
+              aria-expanded={isDesktopExpanded}
             >
-              <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-20 blur-lg transition-opacity group-hover:opacity-40"></div>
+              <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-25 blur-lg transition-opacity group-hover:opacity-50"></div>
               <svg
-                className="relative z-10 h-6 w-6 text-[#00E1FF] transition-transform group-hover:scale-110"
+                className="relative z-10 h-7 w-7 text-[#00E1FF] transition-transform"
                 fill="none"
                 strokeWidth="2"
                 stroke="currentColor"
@@ -183,6 +201,7 @@ export default function Navbar() {
               onClick={toggleDesktopMenu}
               className="group relative flex h-12 w-12 items-center justify-center"
               aria-label="Collapse menu"
+              aria-expanded={isDesktopExpanded}
             >
               <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-20 blur-lg transition-opacity group-hover:opacity-40"></div>
               <svg
@@ -210,14 +229,16 @@ export default function Navbar() {
           >
             <div className="group relative">
               <div className="absolute inset-0 rounded-full bg-[#00E1FF] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30"></div>
-              <Image
-                src="/neon_penguin.svg"
-                alt="Penguin Logo"
-                width={isDesktopExpanded ? 100 : 60}
-                height={isDesktopExpanded ? 100 : 60}
-                priority
-                className="relative drop-shadow-[0_0_15px_rgba(0,225,255,0.3)] transition-all duration-500 hover:scale-105"
-              />
+              <Link href="/">
+                <Image
+                  src="/neon_penguin.svg"
+                  alt="Penguin Logo"
+                  width={isDesktopExpanded ? 100 : 60}
+                  height={isDesktopExpanded ? 100 : 60}
+                  priority
+                  className="relative drop-shadow-[0_0_15px_rgba(0,225,255,0.3)] transition-all duration-500 hover:scale-105"
+                />
+              </Link>
             </div>
 
             <div
@@ -227,7 +248,11 @@ export default function Navbar() {
                   : "max-w-0 opacity-0"
               }`}
             >
-              <span className="relative z-10 text-[#00E1FF]">LUGVITC.NET</span>
+              <Link href="/">
+                <span className="relative z-10 text-[#00E1FF]">
+                  Cyber-0-Day
+                </span>
+              </Link>
             </div>
           </div>
 
@@ -267,23 +292,25 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <nav className="fixed top-0 right-0 left-0 z-50 lg:hidden">
+      <nav
+        className="fixed top-0 right-0 left-0 z-50 lg:hidden"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
         <div className="relative border-b border-[#00E1FF]/20 bg-black/10 backdrop-blur-md">
           <div className="flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/neon_penguin.svg"
-                alt="Penguin Logo"
-                width={30}
-                height={30}
-                priority
-                className="drop-shadow-[0_0_10px_rgba(0,225,255,0.3)]"
-              />
-              <span className="text-sm font-bold tracking-widest text-[#E0E0E0] md:text-base">
-                LUGVITC.NET
-              </span>
-            </div>
-
+            {isMenuOpen ? (
+              <Link
+                href="/"
+                className="flex items-center gap-3"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {mobileBrandContent}
+              </Link>
+            ) : (
+              <div className="flex items-center gap-3">
+                {mobileBrandContent}
+              </div>
+            )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="relative h-10 w-10 focus:outline-none"
@@ -297,7 +324,7 @@ export default function Navbar() {
                 ></span>
                 <span
                   className={`block h-0.5 w-6 bg-[#00E1FF] shadow-[0_0_5px_#00E1FF] transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0" : "my-1.5 opacity-100"
+                    isMenuOpen ? "opacity-0" : "-my-0.5 opacity-100"
                   }`}
                 ></span>
                 <span
