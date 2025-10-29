@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface Challenge {
   id: string;
@@ -8,22 +9,45 @@ interface Challenge {
   points: number;
   description: string;
   author: string;
+  categories: string[];
 }
 
 interface ChallengeOverlayProps {
   challenge: Challenge;
   onClose: () => void;
+  onChallengeCompleted: (challengeId: string) => void;
+  runningContainers: Record<string, number[]>;
+  onContainerUpdate: () => Promise<void>;
+  staticUrl: string | null;
+  onStaticUrlUpdate: (challengeId: string, url: string | null) => void;
 }
 
 export default function ChallengeOverlay({
   challenge,
   onClose,
+  onChallengeCompleted,
+  runningContainers,
+  onContainerUpdate,
+  staticUrl,
+  onStaticUrlUpdate,
 }: ChallengeOverlayProps) {
   const [flagInput, setFlagInput] = useState("");
   const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "correct" | "incorrect"
+    "idle" | "correct" | "incorrect" | "submitting"
   >("idle");
   const [isClosing, setIsClosing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [containerStatus, setContainerStatus] = useState<
+    "idle" | "starting" | "stopping"
+  >("idle");
+  const [containerMessage, setContainerMessage] = useState<string>("");
+
+  const isContainerRunning = challenge.id in runningContainers;
+  const containerPorts = runningContainers[challenge.id] || [];
+
+  useEffect(() => {
+    onContainerUpdate();
+  }, []);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -32,18 +56,116 @@ export default function ChallengeOverlay({
     }, 300);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (flagInput.toLowerCase().includes("c0d4{")) {
-      setSubmitStatus("correct");
+  const handleStartContainer = async () => {
+    setContainerStatus("starting");
+    setContainerMessage("");
+
+    try {
+      const response = await axios.post(
+        `https://dev.lugvitc.net/api/ctf/${challenge.id}/start`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+          },
+        },
+      );
+
+      const { static_url } = response.data;
+
+      if (static_url) {
+        const urlWithSlash = static_url.endsWith("/")
+          ? static_url
+          : `${static_url}/`;
+        onStaticUrlUpdate(challenge.id, urlWithSlash);
+      }
+
+      setContainerMessage("Container started successfully!");
+      setContainerStatus("idle");
+
+      await onContainerUpdate();
+    } catch (error) {
+      setContainerMessage("Failed to start container. Please try again.");
       setTimeout(() => {
-        handleClose();
-        setFlagInput("");
-        setSubmitStatus("idle");
-      }, 2000);
-    } else {
+        setContainerMessage("");
+        setContainerStatus("idle");
+      }, 3000);
+    }
+  };
+
+  const handleStopContainer = async () => {
+    setContainerStatus("stopping");
+    setContainerMessage("");
+
+    try {
+      await axios.post(
+        `https://dev.lugvitc.net/api/ctf/${challenge.id}/stop`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+          },
+        },
+      );
+
+      onStaticUrlUpdate(challenge.id, null);
+
+      setContainerMessage("Container stopped successfully!");
+      setContainerStatus("idle");
+
+      await onContainerUpdate();
+
+      setTimeout(() => {
+        setContainerMessage("");
+      }, 3000);
+    } catch (error) {
+      setContainerMessage("Failed to stop container. Please try again.");
+      setTimeout(() => {
+        setContainerMessage("");
+        setContainerStatus("idle");
+      }, 3000);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!flagInput.trim()) {
+      return;
+    }
+
+    setSubmitStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const response = await axios.post(
+        `https://dev.lugvitc.net/api/ctf/${challenge.id}/flag`,
+        { flag: flagInput },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        setSubmitStatus("correct");
+        onChallengeCompleted(challenge.id);
+        setTimeout(() => {
+          handleClose();
+          setFlagInput("");
+          setSubmitStatus("idle");
+        }, 2000);
+      }
+    } catch (error) {
       setSubmitStatus("incorrect");
-      setTimeout(() => setSubmitStatus("idle"), 2000);
+      setErrorMessage("Incorrect flag. Try again!");
+
+      setTimeout(() => {
+        setSubmitStatus("idle");
+        setErrorMessage("");
+      }, 3000);
     }
   };
 
@@ -84,6 +206,16 @@ export default function ChallengeOverlay({
           <h2 className="font-orbitron mb-2 text-2xl font-bold text-white md:text-3xl">
             {challenge.name}
           </h2>
+          <div className="mb-3 flex flex-wrap gap-2">
+            {challenge.categories.map((category, index) => (
+              <span
+                key={index}
+                className="rounded-md border border-[#00E1FF]/40 bg-[#00E1FF]/10 px-2 py-1 font-mono text-xs text-[#00E1FF]"
+              >
+                {category}
+              </span>
+            ))}
+          </div>
           <div className="flex gap-4">
             <span className="font-jura text-[#00E1FF]">
               {challenge.points} points
@@ -99,9 +231,104 @@ export default function ChallengeOverlay({
             <h3 className="font-jura mb-2 text-lg font-semibold text-gray-300">
               Description
             </h3>
-            <p className="font-mono leading-relaxed text-gray-400">
-              {challenge.description}
-            </p>
+            <div className="max-h-32 overflow-y-auto rounded-lg border border-[#333] bg-[#141414] p-3">
+              <p className="font-mono text-sm leading-relaxed text-gray-400">
+                {challenge.description}
+              </p>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <h3 className="font-jura mb-3 text-lg font-semibold text-gray-300">
+              Docker Container
+            </h3>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleStartContainer}
+                disabled={containerStatus === "starting" || isContainerRunning}
+                className="font-orbitron flex-1 rounded-lg border border-green-500 bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-400 transition-all duration-300 hover:bg-green-500/20 hover:shadow-[0_0_15px_rgba(34,197,94,0.5)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-green-500/10 disabled:hover:shadow-none"
+              >
+                {containerStatus === "starting"
+                  ? "STARTING..."
+                  : isContainerRunning
+                    ? "RUNNING"
+                    : "START"}
+              </button>
+              <button
+                type="button"
+                onClick={handleStopContainer}
+                disabled={containerStatus === "stopping" || !isContainerRunning}
+                className="font-orbitron flex-1 rounded-lg border border-red-500 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/20 hover:shadow-[0_0_15px_rgba(239,68,68,0.5)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-red-500/10 disabled:hover:shadow-none"
+              >
+                {containerStatus === "stopping" ? "STOPPING..." : "STOP"}
+              </button>
+            </div>
+            {containerMessage && (
+              <div className="font-jura mt-3 rounded-lg border border-[#00E1FF]/40 bg-[#00E1FF]/10 p-3 text-center text-sm text-[#00E1FF]">
+                {containerMessage}
+              </div>
+            )}
+
+            {containerPorts.length > 0 && (
+              <div className="mt-3 rounded-lg border border-green-500/40 bg-green-500/10 p-4">
+                <h4 className="font-jura mb-2 text-sm font-semibold text-green-400">
+                  Connection Details:
+                </h4>
+                <div className="space-y-2">
+                  {containerPorts.map((port: number, index: number) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 rounded bg-black/40 p-2"
+                    >
+                      <span className="font-mono text-sm text-gray-300">
+                        nc dev.lugvitc.net:{port}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `nc dev.lugvitc.net:${port}`,
+                          );
+                        }}
+                        className="ml-auto rounded border border-green-500/40 bg-green-500/10 px-2 py-1 text-xs text-green-400 transition hover:bg-green-500/20"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {staticUrl && (
+              <div className="mt-3 rounded-lg border border-blue-500/40 bg-blue-500/10 p-4">
+                <h4 className="font-jura mb-2 text-sm font-semibold text-blue-400">
+                  Static Files:
+                </h4>
+                <a
+                  href={staticUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded bg-black/40 p-2 font-mono text-sm text-blue-400 transition hover:bg-black/60 hover:text-blue-300"
+                >
+                  <span>Download Files</span>
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </div>
+            )}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -117,17 +344,17 @@ export default function ChallengeOverlay({
                 type="text"
                 value={flagInput}
                 onChange={(e) => setFlagInput(e.target.value)}
-                placeholder="c0d4{...}"
+                placeholder="C0D{...}"
                 className="w-full rounded-lg border border-[#333] bg-[#141414] px-4 py-3 font-mono text-white placeholder-gray-600 transition-all duration-300 focus:border-[#00E1FF] focus:ring-2 focus:ring-[#00E1FF]/50 focus:outline-none"
               />
             </div>
 
             <button
               type="submit"
-              disabled={!flagInput.trim()}
+              disabled={!flagInput.trim() || submitStatus === "submitting"}
               className="font-orbitron w-full rounded-lg border border-[#00E1FF] bg-[#00E1FF]/10 px-6 py-3 font-semibold text-[#00E1FF] transition-all duration-300 hover:bg-[#00E1FF]/20 hover:shadow-[0_0_20px_rgba(0,225,255,0.5)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#00E1FF]/10 disabled:hover:shadow-none"
             >
-              SUBMIT
+              {submitStatus === "submitting" ? "SUBMITTING..." : "SUBMIT"}
             </button>
 
             {submitStatus === "correct" && (
@@ -137,7 +364,7 @@ export default function ChallengeOverlay({
             )}
             {submitStatus === "incorrect" && (
               <div className="font-jura animate-pulse rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-center text-red-400">
-                ✗ Incorrect flag. Try again!
+                ✗ {errorMessage || "Incorrect flag. Try again!"}
               </div>
             )}
           </form>

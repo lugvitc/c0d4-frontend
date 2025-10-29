@@ -12,6 +12,8 @@ interface Challenge {
   points: number;
   description: string;
   author: string;
+  categories: string[];
+  isCompleted?: boolean;
 }
 
 interface Category {
@@ -29,14 +31,25 @@ interface ApiChallenge {
   tags: number;
 }
 
-// Category mapping based on tags
-const CATEGORY_MAP: Record<number, string> = {
-  1: "WEB EXPLOITATION",
-  2: "BINARY EXPLOITATION",
-  3: "FORENSICS",
-  4: "OSINT",
-  5: "REVERSING",
-};
+const challengeTypes = [
+  "WEB EXPLOITATION",
+  "BINARY EXPLOITATION",
+  "FORENSICS",
+  "OSINT",
+  "REVERSING",
+];
+
+function getTypesFromMask(mask: number): string[] {
+  const result: string[] = [];
+
+  for (let i = 0; i < challengeTypes.length; i++) {
+    if (mask & (1 << i)) {
+      result.push(challengeTypes[i]);
+    }
+  }
+
+  return result;
+}
 
 export default function ChallengesPage() {
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
@@ -45,29 +58,61 @@ export default function ChallengesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [runningContainers, setRunningContainers] = useState<
+    Record<string, number[]>
+  >({});
+  const [staticUrls, setStaticUrls] = useState<Record<string, string>>({});
+  const [showContainerManager, setShowContainerManager] = useState(false);
+  const [stoppingContainer, setStoppingContainer] = useState<string | null>(
+    null,
+  );
+
+  const fetchRunningContainers = async () => {
+    try {
+      const response = await axios.get<Record<string, number[]>>(
+        "https://dev.lugvitc.net/api/team/containers",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+          },
+        },
+      );
+      setRunningContainers(response.data);
+    } catch (error) {
+      console.error("Error fetching running containers:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
         setLoading(true);
 
+        const authToken = window.localStorage.getItem("authToken");
+        const headers = {
+          Authorization: `Bearer ${authToken}`,
+        };
+
         const response = await axios.get<ApiChallenge[]>(
           "https://dev.lugvitc.net/api/ctf/list",
-          {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-            },
-          },
+          { headers },
         );
 
-        const categoryMap = new Map<number, Challenge[]>();
+        let completedIds = new Set<number>();
+        try {
+          const completedResponse = await axios.get<ApiChallenge[]>(
+            "https://dev.lugvitc.net/api/ctf/completed",
+            { headers },
+          );
+          completedIds = new Set(completedResponse.data.map((c) => c.id));
+        } catch (completedError) {
+          console.error("Error fetching completed challenges:", completedError);
+        }
+
+        const categoryMap = new Map<string, Challenge[]>();
 
         response.data.forEach((apiChallenge) => {
-          const tagId = apiChallenge.tags;
-
-          if (!categoryMap.has(tagId)) {
-            categoryMap.set(tagId, []);
-          }
+          const categories = getTypesFromMask(apiChallenge.tags);
 
           const challenge: Challenge = {
             id: apiChallenge.id.toString(),
@@ -75,18 +120,26 @@ export default function ChallengesPage() {
             points: apiChallenge.points,
             description: apiChallenge.description,
             author: apiChallenge.author,
+            categories: categories,
+            isCompleted: completedIds.has(apiChallenge.id),
           };
 
-          categoryMap.get(tagId)?.push(challenge);
+          if (categories.length > 0) {
+            const primaryCategory = categories[0];
+            if (!categoryMap.has(primaryCategory)) {
+              categoryMap.set(primaryCategory, []);
+            }
+            categoryMap.get(primaryCategory)?.push(challenge);
+          }
         });
 
-        const categoriesArray: Category[] = Array.from(
-          categoryMap.entries(),
-        ).map(([tagId, challenges]) => ({
-          id: tagId.toString(),
-          name: CATEGORY_MAP[tagId] || `CATEGORY ${tagId}`,
-          challenges,
-        }));
+        const categoriesArray: Category[] = challengeTypes
+          .map((categoryName, index) => ({
+            id: index.toString(),
+            name: categoryName,
+            challenges: categoryMap.get(categoryName) || [],
+          }))
+          .filter((category) => category.challenges.length > 0);
 
         categoriesArray.sort((a, b) => Number(a.id) - Number(b.id));
 
@@ -118,6 +171,75 @@ export default function ChallengesPage() {
 
   const closeModal = () => {
     setSelectedChallenge(null);
+  };
+
+  const handleStaticUrlUpdate = (challengeId: string, url: string | null) => {
+    setStaticUrls((prev) => {
+      if (url === null) {
+        const { [challengeId]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [challengeId]: url };
+    });
+  };
+
+  const handleChallengeCompleted = (challengeId: string) => {
+    setCategories((prevCategories) =>
+      prevCategories.map((category) => ({
+        ...category,
+        challenges: category.challenges.map((challenge) =>
+          challenge.id === challengeId
+            ? { ...challenge, isCompleted: true }
+            : challenge,
+        ),
+      })),
+    );
+  };
+
+  const handleStopContainer = async (ctfId: string) => {
+    setStoppingContainer(ctfId);
+
+    try {
+      await axios.post(
+        `https://dev.lugvitc.net/api/ctf/${ctfId}/stop`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+          },
+        },
+      );
+
+      // Refresh the running containers list
+      await fetchRunningContainers();
+    } catch (error) {
+      console.error("Error stopping container:", error);
+    } finally {
+      setStoppingContainer(null);
+    }
+  };
+
+  const handleStopAllContainers = async () => {
+    setStoppingContainer("all");
+
+    try {
+      await axios.post(
+        "https://dev.lugvitc.net/api/ctf/stopall",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+          },
+        },
+      );
+
+      // Refresh the running containers list
+      await fetchRunningContainers();
+    } catch (error) {
+      console.error("Error stopping all containers:", error);
+    } finally {
+      setStoppingContainer(null);
+    }
   };
 
   if (loading) {
@@ -190,16 +312,109 @@ export default function ChallengesPage() {
                   id={challenge.id}
                   name={challenge.name}
                   points={challenge.points}
-                  onClick={() => setSelectedChallenge(challenge)}
+                  isCompleted={challenge.isCompleted}
+                  onClick={() => {
+                    if (!challenge.isCompleted) {
+                      setSelectedChallenge(challenge);
+                    }
+                  }}
                 />
               ))}
             </div>
           </div>
         ))}
+
+        <div className="mt-12 flex flex-col items-center">
+          <button
+            onClick={() => {
+              setShowContainerManager(!showContainerManager);
+              if (!showContainerManager) {
+                fetchRunningContainers();
+              }
+            }}
+            className="font-orbitron rounded-lg border border-[#00E1FF] bg-[#00E1FF]/10 px-6 py-2 text-sm font-semibold text-[#00E1FF] transition-all duration-300 hover:bg-[#00E1FF]/20 hover:shadow-[0_0_20px_rgba(0,225,255,0.5)]"
+          >
+            {showContainerManager
+              ? "HIDE CONTAINER MANAGER"
+              : "MANAGE CONTAINERS"}
+          </button>
+
+          {showContainerManager && (
+            <div className="mt-6 w-full max-w-2xl rounded-lg border border-[#00E1FF]/60 bg-[#12121270] p-6 shadow-[0_0_20px_rgba(0,225,255,0.2)] backdrop-blur-md">
+              <h3 className="font-orbitron mb-4 text-xl font-bold text-[#00E1FF]">
+                Running Containers
+              </h3>
+
+              {Object.keys(runningContainers).length === 0 ? (
+                <p className="font-jura text-center text-gray-400">
+                  No running containers
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {Object.entries(runningContainers).map(([ctfId, ports]) => {
+                    const challenge = categories
+                      .flatMap((cat) => cat.challenges)
+                      .find((c) => c.id === ctfId);
+
+                    return (
+                      <div
+                        key={ctfId}
+                        className="flex items-center justify-between rounded-lg border border-[#00E1FF]/40 bg-[#12121250] p-4 backdrop-blur-sm"
+                      >
+                        <div className="flex-1">
+                          <h4 className="font-orbitron text-sm font-semibold text-white">
+                            {challenge?.name || `Challenge #${ctfId}`}
+                          </h4>
+                          {ports.length > 0 && (
+                            <div className="mt-1 flex flex-wrap gap-2">
+                              {ports.map((port, idx) => (
+                                <span
+                                  key={idx}
+                                  className="font-mono text-xs text-green-400"
+                                >
+                                  Port: {port}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => handleStopContainer(ctfId)}
+                          disabled={stoppingContainer === ctfId}
+                          className="font-orbitron ml-4 rounded-lg border border-red-500 bg-red-500/10 px-4 py-2 text-xs font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {stoppingContainer === ctfId ? "STOPPING..." : "STOP"}
+                        </button>
+                      </div>
+                    );
+                  })}
+
+                  <button
+                    onClick={handleStopAllContainers}
+                    disabled={stoppingContainer === "all"}
+                    className="font-orbitron mt-4 w-full rounded-lg border border-red-500 bg-red-500/10 px-6 py-2 text-sm font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {stoppingContainer === "all"
+                      ? "STOPPING ALL..."
+                      : "STOP ALL CONTAINERS"}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {selectedChallenge && (
-        <ChallengeOverlay challenge={selectedChallenge} onClose={closeModal} />
+        <ChallengeOverlay
+          challenge={selectedChallenge}
+          onClose={closeModal}
+          onChallengeCompleted={handleChallengeCompleted}
+          runningContainers={runningContainers}
+          onContainerUpdate={fetchRunningContainers}
+          staticUrl={staticUrls[selectedChallenge.id] || null}
+          onStaticUrlUpdate={handleStaticUrlUpdate}
+        />
       )}
     </div>
   );
