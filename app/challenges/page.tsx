@@ -105,6 +105,17 @@ export default function ChallengesPage() {
     fetchChallenges();
   }, []);
 
+  useEffect(() => {
+    if (selectedChallenge) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedChallenge]);
+
   const closeModal = () => {
     setSelectedChallenge(null);
   };
