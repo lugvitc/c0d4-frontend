@@ -56,18 +56,17 @@ export default function Navbar() {
   const baseMenuItems = [
     { href: "/signup", text: "Sign Up", hideWhenAuth: true },
     { href: "/login", text: "Login", hideWhenAuth: true },
-    { href: "/challenges", text: "Challenges", requiresAuth: true },
-    { href: "/#timeline", text: "Timeline" },
-    { href: "/#rules", text: "Rules" },
     { href: "/#prizes", text: "Prizes" },
+    { href: "/#rules", text: "Rules" },
+    { href: "/#timeline", text: "Timeline" },
     { href: "/leaderboard", text: "Leaderboard" },
+    { href: "/challenges", text: "Challenges", requiresAuth: true },
   ];
   const menuItems = baseMenuItems.filter((item) => {
     if (item.requiresAuth) return isAuthenticated;
     if (item.hideWhenAuth) return !isAuthenticated;
     return true;
   });
-  const showExpandHint = isMounted && isDesktopCollapsed && !isDesktopExpanded;
   const mobileBrandContent = (
     <>
       <Image
@@ -79,7 +78,7 @@ export default function Navbar() {
         className="drop-shadow-[0_0_10px_rgba(0,225,255,0.3)]"
       />
       <span className="text-sm font-bold tracking-widest text-[#E0E0E0] md:text-base">
-        LUGVITC.NET
+        Cyber-0-Day
       </span>
     </>
   );
@@ -135,7 +134,7 @@ export default function Navbar() {
     window.dispatchEvent(new Event("auth-changed"));
     setIsAuthenticated(false);
     setIsMenuOpen(false);
-    router.push("/login");
+    router.push("/");
   };
 
   return (

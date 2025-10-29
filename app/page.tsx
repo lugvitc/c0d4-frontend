@@ -132,17 +132,22 @@ export default function Home() {
           width={1000}
           height={200}
         />
-        <div
-          className="font-orbitron rounded-lg border-2 border-[#00E1FF] text-2xl text-[#00E1FF] uppercase transition-all duration-200 hover:bg-[#00E1FF] hover:text-black"
-          style={{
-            filter:
-              "drop-shadow(0 0 1rem #FFFFFF) drop-shadow(0 0 2rem #FFFFFF)",
-          }}
+        <Link
+          href="https://chennaievents.vit.ac.in/technovit/eventPreview"
+          target="_blank"
         >
-          <div className="px-8 py-1">
-            <Link href="/signup">Register</Link>
+          <div
+            className="font-orbitron rounded-lg border-2 border-[#00E1FF] text-2xl text-[#00E1FF] uppercase transition-all duration-200 hover:bg-[#00E1FF] hover:text-black"
+            style={{
+              filter:
+                "drop-shadow(0 0 1rem #FFFFFF) drop-shadow(0 0 2rem #FFFFFF)",
+            }}
+          >
+            <div className="px-8 py-1">
+              <span>Register</span>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className="m-10 max-w-2xs text-center text-2xl font-bold">
           Don&apos;t miss the ultimate hacking experience of the year
         </div>
