@@ -38,6 +38,11 @@ interface TeamInfo {
   points: number;
 }
 
+interface LeaderboardTeam {
+  name: string;
+  tpoints: number;
+}
+
 const challengeTypes = [
   "WEB EXPLOITATION",
   "BINARY EXPLOITATION",
@@ -111,7 +116,28 @@ export default function ChallengesPage() {
             "https://dev.lugvitc.net/api/team/me",
             { headers },
           );
-          setTeamInfo(teamResponse.data);
+
+          try {
+            const leaderboardResponse = await axios.get<LeaderboardTeam[]>(
+              "https://dev.lugvitc.net/api/leaderboard",
+            );
+
+            const currentTeamInLeaderboard = leaderboardResponse.data.find(
+              (team) => team.name === teamResponse.data.name,
+            );
+
+            if (currentTeamInLeaderboard) {
+              setTeamInfo({
+                ...teamResponse.data,
+                points: currentTeamInLeaderboard.tpoints,
+              });
+            } else {
+              setTeamInfo(teamResponse.data);
+            }
+          } catch (leaderboardError) {
+            console.error("Error fetching leaderboard:", leaderboardError);
+            setTeamInfo(teamResponse.data);
+          }
         } catch (teamError) {
           console.error("Error fetching team info:", teamError);
         }
