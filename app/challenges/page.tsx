@@ -348,11 +348,11 @@ export default function ChallengesPage() {
         {categories.map((category) => (
           <div key={category.id} className="mb-16">
             <div className="mb-6 flex items-center gap-4">
-              <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#00E1FF] to-transparent"></div>
+              <div className="h-0.5 flex-1 bg-linear-to-r from-transparent via-[#00E1FF] to-transparent"></div>
               <h2 className="font-orbitron text-2xl font-bold tracking-wider text-[#00E1FF] md:text-3xl">
                 {category.name}
               </h2>
-              <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#00E1FF] to-transparent"></div>
+              <div className="h-0.5 flex-1 bg-linear-to-r from-transparent via-[#00E1FF] to-transparent"></div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

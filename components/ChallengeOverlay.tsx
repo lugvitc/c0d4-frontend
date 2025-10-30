@@ -293,7 +293,7 @@ export default function ChallengeOverlay({
           </svg>
         </button>
 
-        <div className="border-b border-[#00E1FF]/30 bg-gradient-to-r from-[#00E1FF]/10 to-transparent p-6">
+        <div className="border-b border-[#00E1FF]/30 bg-linear-to-r from-[#00E1FF]/10 to-transparent p-6">
           <h2 className="font-orbitron mb-2 text-2xl font-bold text-white md:text-3xl">
             {challenge.name}
           </h2>
