@@ -66,6 +66,7 @@ export default function ChallengeOverlay({
   const [hintError, setHintError] = useState<string | null>(null);
   const [hintInfoMessage, setHintInfoMessage] = useState<string | null>(null);
   const [requestingHint, setRequestingHint] = useState(false);
+  const [copiedPort, setCopiedPort] = useState<number | null>(null);
   const difficulty = getDifficulty(challenge.points);
 
   const isContainerRunning = challenge.id in runningContainers;
@@ -417,10 +418,12 @@ export default function ChallengeOverlay({
                               navigator.clipboard.writeText(
                                 `dev.lugvitc.net:${port}`,
                               );
+                              setCopiedPort(port);
+                              setTimeout(() => setCopiedPort(null), 2000);
                             }}
                             className="ml-auto rounded border border-green-500/40 bg-green-500/10 px-2 py-1 text-xs text-green-400 transition hover:bg-green-500/20"
                           >
-                            Copy
+                            {copiedPort === port ? "Copied!" : "Copy"}
                           </button>
                         </div>
                       ))}
