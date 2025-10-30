@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div className="relative select-none">
       <div className="pointer-events-none absolute top-[75vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-transparent to-[#0088DC61]"></div>
 
       <div className="pointer-events-none absolute top-[100vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-[#0088DC61] to-transparent"></div>
@@ -16,19 +16,20 @@ export default function Home() {
           alt="Cyber-0-Day 4.0 Title Card"
           width={1000}
           height={600}
+          className="h-auto w-full max-w-[90%] md:max-w-[70%] lg:max-w-[1000px]"
         />
       </div>
 
-      <div className="font-jura my-20 flex flex-col justify-center gap-3 text-center text-3xl font-bold uppercase md:my-32 md:text-5xl lg:text-7xl">
-        <p>VIT Chennai&apos;s</p>
-        <p>Biggest CyberSecurity Event</p>
+      <div className="font-jura my-20 flex flex-col justify-center gap-3 px-4 text-center text-2xl font-bold uppercase sm:text-3xl md:my-32 md:text-5xl lg:text-7xl">
+        <p>One of VIT Chennai&apos;s</p>
+        <p>Biggest CyberSecurity Events</p>
       </div>
 
       <div
-        id="prizes"
-        className="font-jura flex justify-center gap-10 py-20 text-center text-2xl font-bold tracking-tight md:gap-20 md:text-4xl lg:gap-96 lg:text-5xl"
+        id="highlights"
+        className="font-jura flex flex-col justify-center gap-8 px-4 py-20 text-center text-xl font-bold tracking-tight sm:flex-row sm:gap-6 sm:text-2xl md:gap-12 md:text-4xl lg:gap-36 lg:text-5xl"
       >
-        <div>
+        <div className="flex-1">
           <p>200+</p>
           <p
             style={{
@@ -40,23 +41,26 @@ export default function Home() {
           </p>
         </div>
         <div
-          className="text-[#00E1FF]"
+          className="flex-1 text-[#00E1FF]"
           style={{
             filter:
               "drop-shadow(0 0 5rem #00E1FF) drop-shadow(0 0 10rem #00E1FF)",
           }}
         >
-          <p>₹20,000+</p>
+          <p className="text-base md:text-xl lg:text-2xl">
+            From the organizers of
+          </p>
           <p
+            className="mt-1 text-5xl md:text-7xl"
             style={{
               WebkitTextStroke: "1px #00E1FF",
               WebkitTextFillColor: "transparent",
             }}
           >
-            Prizes
+            PASSWORD
           </p>
         </div>
-        <div>
+        <div className="flex-1">
           <p className="font-orbitron">24</p>
           <p
             style={{
@@ -69,9 +73,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 text-center font-bold uppercase">
+      <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 px-4 text-center font-bold uppercase">
         <div
-          className="text-3xl text-[#00E1FF] md:text-4xl lg:text-6xl"
+          className="text-2xl text-[#00E1FF] sm:text-3xl md:text-4xl lg:text-6xl"
           style={{
             filter:
               "drop-shadow(0 0 5rem #00E1FF) drop-shadow(0 0 10rem #00E1FF)",
@@ -79,7 +83,7 @@ export default function Home() {
         >
           Enter the world of cybersecurity
         </div>
-        <div className="text-xl md:text-2xl lg:text-3xl">
+        <div className="text-base sm:text-lg md:text-2xl lg:text-3xl">
           Tailor made jeopardy-style CTFs and workshops from Pentathon
           Finalists!
         </div>
@@ -87,10 +91,10 @@ export default function Home() {
 
       <Categories />
 
-      <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 font-bold uppercase">
+      <div className="font-jura mx-5 my-20 flex flex-col justify-center gap-5 px-4 font-bold uppercase">
         <div
           id="rules"
-          className="text-center text-3xl text-[#00E1FF] md:text-4xl lg:text-6xl"
+          className="text-center text-2xl text-[#00E1FF] sm:text-3xl md:text-4xl lg:text-6xl"
           style={{
             filter:
               "drop-shadow(0 0 2rem #00E1FF) drop-shadow(0 0 5rem #00E1FF)",
@@ -125,17 +129,15 @@ export default function Home() {
       </div>
       <Timeline />
 
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-4 px-4 py-8">
         <Image
           src="/title-card.svg"
           alt="Cyber-0-Day 4.0 Title Card"
           width={1000}
           height={200}
+          className="h-auto w-full max-w-[90%] md:max-w-[70%] lg:max-w-[1000px]"
         />
-        <Link
-          href="https://chennaievents.vit.ac.in/technovit/eventPreview"
-          target="_blank"
-        >
+        <Link href="https://chennaievents.vit.ac.in/technovit/" target="_blank">
           <div
             className="font-orbitron rounded-lg border-2 border-[#00E1FF] text-2xl text-[#00E1FF] uppercase transition-all duration-200 hover:bg-[#00E1FF] hover:text-black"
             style={{
@@ -143,7 +145,7 @@ export default function Home() {
                 "drop-shadow(0 0 1rem #FFFFFF) drop-shadow(0 0 2rem #FFFFFF)",
             }}
           >
-            <div className="px-8 py-1">
+            <div className="px-6 py-2 sm:px-8 sm:py-1">
               <span>Register</span>
             </div>
           </div>

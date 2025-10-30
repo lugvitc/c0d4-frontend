@@ -61,7 +61,7 @@ export default function Navbar() {
   };
 
   const baseMenuItems: MenuItem[] = [
-    { href: "/#prizes", text: "Prizes" },
+    { href: "/#highlights", text: "Highlights" },
     { href: "/#rules", text: "Rules" },
     { href: "/#timeline", text: "Timeline" },
   ];
