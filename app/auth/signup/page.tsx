@@ -31,7 +31,9 @@ export default function CreateTeam() {
     e.preventDefault();
     setError("");
 
-    const filledRegNumbers = regNumbers.filter((reg) => reg.trim() !== "");
+    const filledRegNumbers = regNumbers.filter(
+      (reg) => reg.trim().toLowerCase() !== "",
+    );
 
     if (!teamName || !teamPassword || filledRegNumbers.length === 0) {
       setError(
