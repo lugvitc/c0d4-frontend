@@ -240,15 +240,18 @@ export default function ChallengeOverlay({
           },
         },
       );
-      if (response.data?.msg_code === 9) {
-        setHintInfoMessage("No more hints available.");
-      } else {
-        setHintInfoMessage("New hint unlocked.");
-        await loadViewedHints();
-      }
+      setHintInfoMessage("New hint unlocked.");
+      await loadViewedHints();
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.data?.msg_code === 9) {
-        setHintInfoMessage("No more hints available.");
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        console.log(status);
+
+        if (status === 403) {
+          setHintInfoMessage("No more hints available.");
+        } else {
+          setHintError("This challenge has no hints.");
+        }
       } else {
         setHintError("Unable to fetch a new hint right now.");
       }
@@ -406,13 +409,13 @@ export default function ChallengeOverlay({
                           className="flex items-center gap-2 rounded bg-black/40 p-2"
                         >
                           <span className="font-mono text-sm text-gray-300">
-                            nc dev.lugvitc.net:{port}
+                            dev.lugvitc.net:{port}
                           </span>
                           <button
                             type="button"
                             onClick={() => {
                               navigator.clipboard.writeText(
-                                `nc dev.lugvitc.net:${port}`,
+                                `dev.lugvitc.net:${port}`,
                               );
                             }}
                             className="ml-auto rounded border border-green-500/40 bg-green-500/10 px-2 py-1 text-xs text-green-400 transition hover:bg-green-500/20"
