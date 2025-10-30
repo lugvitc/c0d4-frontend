@@ -52,6 +52,24 @@ const events: TimelineEvent[] = [
     instructor: "BY PREETHAM PEMMASANI",
     tag: "WORKSHOP",
   },
+  {
+    time: "16:30 TO 17:30",
+    title: "QUIZ",
+    instructor: "",
+    tag: "EVENT",
+  },
+  {
+    time: "17:45 to 19:45",
+    title: "DINNER",
+    instructor: "",
+    tag: "BREAK",
+  },
+  {
+    time: "20:00 ONWARDS",
+    title: "OVERNIGHT CTF",
+    instructor: "",
+    tag: "EVENT",
+  },
 ];
 
 export default function Timeline() {
@@ -117,8 +135,11 @@ export default function Timeline() {
         <div className="space-y-12">
           {events.map((event, index) => {
             const isBreak = event.tag === "BREAK";
-            const breakIndex = events.findIndex((e) => e.tag === "BREAK");
-            const effectiveIndex = index <= breakIndex ? index : index - 1;
+            // Count only non-break events to determine left/right positioning
+            const nonBreakEventsBefore = events
+              .slice(0, index)
+              .filter((e) => e.tag !== "BREAK").length;
+            const effectiveIndex = nonBreakEventsBefore;
 
             return (
               <div
