@@ -21,8 +21,8 @@ export default function Home() {
       </div>
 
       <div className="font-jura my-20 flex flex-col justify-center gap-3 px-4 text-center text-2xl font-bold uppercase sm:text-3xl md:my-32 md:text-5xl lg:text-7xl">
-        <p>One of VIT Chennai&apos;s</p>
-        <p>Biggest CyberSecurity Events</p>
+        <p>VIT Chennai&apos;s</p>
+        <p>Biggest CyberSecurity Event</p>
       </div>
 
       <div
