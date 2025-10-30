@@ -199,7 +199,7 @@ export default function ChallengeOverlay({
         },
       );
 
-      if (response.status === 200) {
+      if (response.status === 200 && response.data?.status === true) {
         setSubmitStatus("correct");
         onChallengeCompleted(challenge.id);
         setTimeout(() => {
@@ -207,6 +207,14 @@ export default function ChallengeOverlay({
           setFlagInput("");
           setSubmitStatus("idle");
         }, 2000);
+      } else if (response.status === 200 && response.data?.status === false) {
+        setSubmitStatus("incorrect");
+        setErrorMessage("Incorrect flag. Try again!");
+
+        setTimeout(() => {
+          setSubmitStatus("idle");
+          setErrorMessage("");
+        }, 3000);
       }
     } catch (error) {
       setSubmitStatus("incorrect");
