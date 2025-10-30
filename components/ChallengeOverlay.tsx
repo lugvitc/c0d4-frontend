@@ -354,7 +354,7 @@ export default function ChallengeOverlay({
                 <h3 className="font-jura mb-2 text-lg font-semibold text-gray-300">
                   Description
                 </h3>
-                <div className="max-h-32 overflow-y-auto rounded-lg border border-[#333] bg-[#141414] p-3">
+                <div className="no-scrollbar max-h-32 overflow-y-auto rounded-lg border border-[#333] bg-[#141414] p-3">
                   <p className="font-mono text-sm leading-relaxed text-gray-400">
                     {challenge.description}
                   </p>
