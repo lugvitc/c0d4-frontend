@@ -6,12 +6,27 @@ interface ChallengeCardProps {
   isCompleted?: boolean;
 }
 
+const difficultyStyles = {
+  easy: "border-green-500/40 bg-green-500/10 text-green-400",
+  medium: "border-yellow-500/40 bg-yellow-500/10 text-yellow-400",
+  hard: "border-red-500/40 bg-red-500/10 text-red-400",
+};
+
+const getDifficulty = (points: number) => {
+  if (points <= 200) return { label: "Easy", className: difficultyStyles.easy };
+  if (points <= 400)
+    return { label: "Medium", className: difficultyStyles.medium };
+  return { label: "Hard", className: difficultyStyles.hard };
+};
+
 export default function ChallengeCard({
   name,
   points,
   onClick,
   isCompleted = false,
 }: ChallengeCardProps) {
+  const difficulty = getDifficulty(points);
+
   return (
     <div
       onClick={onClick}
@@ -54,13 +69,18 @@ export default function ChallengeCard({
           {name}
         </h3>
 
-        <div className="mb-3">
+        <div className="mb-3 flex items-center justify-between">
           <span
             className={`font-jura text-sm ${
               isCompleted ? "text-green-400" : "text-[#00E1FF]"
             }`}
           >
             {points} pts
+          </span>
+          <span
+            className={`font-jura rounded-full border px-3 py-1 text-xs tracking-wide uppercase ${difficulty.className}`}
+          >
+            {difficulty.label}
           </span>
         </div>
 

@@ -31,6 +31,13 @@ interface ApiChallenge {
   tags: number;
 }
 
+interface TeamInfo {
+  id: number;
+  name: string;
+  coins: number;
+  points: number;
+}
+
 const challengeTypes = [
   "WEB EXPLOITATION",
   "BINARY EXPLOITATION",
@@ -56,6 +63,7 @@ export default function ChallengesPage() {
     null,
   );
   const [categories, setCategories] = useState<Category[]>([]);
+  const [teamInfo, setTeamInfo] = useState<TeamInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [runningContainers, setRunningContainers] = useState<
@@ -97,6 +105,16 @@ export default function ChallengesPage() {
           "https://dev.lugvitc.net/api/ctf/list",
           { headers },
         );
+
+        try {
+          const teamResponse = await axios.get<TeamInfo>(
+            "https://dev.lugvitc.net/api/team/me",
+            { headers },
+          );
+          setTeamInfo(teamResponse.data);
+        } catch (teamError) {
+          console.error("Error fetching team info:", teamError);
+        }
 
         let completedIds = new Set<number>();
         try {
@@ -288,6 +306,12 @@ export default function ChallengesPage() {
 
   return (
     <div className="relative min-h-screen">
+      {teamInfo && (
+        <div className="absolute top-6 left-6 z-20 rounded-lg border border-[#00E1FF]/60 bg-[#0a0a0acc] px-4 py-2 text-sm text-[#00E1FF]">
+          {teamInfo.name}: {teamInfo.points} pts
+        </div>
+      )}
+
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 md:px-8 lg:px-16">
         <h1 className="font-orbitron mb-4 text-4xl font-bold tracking-widest md:text-6xl">
           CHALLENGES
