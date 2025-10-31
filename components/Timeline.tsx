@@ -13,7 +13,7 @@ const events: TimelineEvent[] = [
   {
     time: "10:00 TO 10:45",
     title: "LINUX BASICS",
-    instructor: "BY AMIITESH",
+    instructor: "BY AMIITESH PRADEEP KUMAR",
     tag: "WORKSHOP",
   },
   {
