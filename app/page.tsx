@@ -6,9 +6,9 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="relative select-none">
-      <div className="pointer-events-none absolute top-[75vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-transparent to-[#0088DC61]"></div>
+      <div className="pointer-events-none absolute top-[75vh] left-0 z-[-1] h-[25vh] w-full bg-linear-to-b from-transparent to-[#0088DC61]"></div>
 
-      <div className="pointer-events-none absolute top-[100vh] left-0 z-[-1] h-[25vh] w-full bg-gradient-to-b from-[#0088DC61] to-transparent"></div>
+      <div className="pointer-events-none absolute top-[100vh] left-0 z-[-1] h-[25vh] w-full bg-linear-to-b from-[#0088DC61] to-transparent"></div>
 
       <div className="flex min-h-dvh w-full items-center justify-center p-5 md:items-end md:justify-start md:p-8 lg:p-10">
         <Image
