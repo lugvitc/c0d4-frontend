@@ -333,7 +333,7 @@ export default function ChallengesPage() {
     <div className="relative min-h-screen">
       {teamInfo && (
         <div className="absolute top-6 left-6 z-20 rounded-lg border border-[#00E1FF]/60 bg-[#0a0a0acc] px-4 py-2 text-sm text-[#00E1FF]">
-          {teamInfo.name}: {teamInfo.points} pts
+          {teamInfo.name}: {teamInfo.points.toFixed(0)} pts
         </div>
       )}
 
