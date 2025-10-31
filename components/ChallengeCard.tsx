@@ -1,3 +1,8 @@
+"use client";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 interface ChallengeCardProps {
   id: string;
   name: string;
@@ -20,12 +25,42 @@ const getDifficulty = (points: number) => {
 };
 
 export default function ChallengeCard({
+  id,
   name,
   points,
   onClick,
   isCompleted = false,
 }: ChallengeCardProps) {
-  const difficulty = getDifficulty(points);
+  const [originalPoints, setOriginalPoints] = useState<number | null>(null);
+  const difficultyPoints = originalPoints ?? points;
+  const difficulty = getDifficulty(difficultyPoints);
+
+  useEffect(() => {
+    const fetchOriginalPoints = async () => {
+      try {
+        const response = await axios.get(
+          `https://dev.lugvitc.net/api/ctf/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+            },
+          },
+        );
+        const data = Array.isArray(response.data)
+          ? response.data[0]
+          : response.data;
+        if (typeof data?.points === "number") {
+          setOriginalPoints(data.points);
+        } else {
+          setOriginalPoints(points);
+        }
+      } catch {
+        setOriginalPoints(points);
+      }
+    };
+
+    fetchOriginalPoints();
+  }, [id, points]);
 
   return (
     <div
