@@ -2,6 +2,7 @@
 
 import ChallengeCard from "@/components/ChallengeCard";
 import ChallengeOverlay from "@/components/ChallengeOverlay";
+import { BACKEND_URL } from "@/lib/constants";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -83,7 +84,7 @@ export default function ChallengesPage() {
   const fetchRunningContainers = async () => {
     try {
       const response = await axios.get<Record<string, number[]>>(
-        "https://pwn.lugvitc.net/api/team/containers",
+        `${BACKEND_URL}/api/team/containers`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -107,19 +108,19 @@ export default function ChallengesPage() {
         };
 
         const response = await axios.get<ApiChallenge[]>(
-          "https://pwn.lugvitc.net/api/ctf/list",
+          `${BACKEND_URL}/api/ctf/list`,
           { headers },
         );
 
         try {
           const teamResponse = await axios.get<TeamInfo>(
-            "https://pwn.lugvitc.net/api/team/me",
+            `${BACKEND_URL}/api/team/me`,
             { headers },
           );
 
           try {
             const leaderboardResponse = await axios.get<LeaderboardTeam[]>(
-              "https://pwn.lugvitc.net/api/leaderboard",
+              `${BACKEND_URL}/api/leaderboard`,
             );
 
             const currentTeamInLeaderboard = leaderboardResponse.data.find(
@@ -145,7 +146,7 @@ export default function ChallengesPage() {
         let completedIds = new Set<number>();
         try {
           const completedResponse = await axios.get<ApiChallenge[]>(
-            "https://pwn.lugvitc.net/api/ctf/completed",
+            `${BACKEND_URL}/api/ctf/completed`,
             { headers },
           );
           completedIds = new Set(completedResponse.data.map((c) => c.id));
@@ -245,7 +246,7 @@ export default function ChallengesPage() {
 
     try {
       await axios.post(
-        `https://pwn.lugvitc.net/api/ctf/${ctfId}/stop`,
+        `${BACKEND_URL}/api/ctf/${ctfId}/stop`,
         {},
         {
           headers: {
@@ -267,7 +268,7 @@ export default function ChallengesPage() {
 
     try {
       await axios.post(
-        "https://pwn.lugvitc.net/api/ctf/stopall",
+        `${BACKEND_URL}/api/ctf/stopall`,
         {},
         {
           headers: {

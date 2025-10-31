@@ -1,5 +1,6 @@
 "use client";
 
+import { BACKEND_URL } from "@/lib/constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -38,14 +39,11 @@ export default function ChallengeCard({
   useEffect(() => {
     const fetchOriginalPoints = async () => {
       try {
-        const response = await axios.get(
-          `https://pwn.lugvitc.net/api/ctf/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-            },
+        const response = await axios.get(`${BACKEND_URL}/api/ctf/${id}`, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
           },
-        );
+        });
         const data = Array.isArray(response.data)
           ? response.data[0]
           : response.data;

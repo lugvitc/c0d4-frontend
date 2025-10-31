@@ -1,5 +1,6 @@
 "use client";
 
+import { BACKEND_URL } from "@/lib/constants";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,14 +60,11 @@ export default function CreateTeam() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://pwn.lugvitc.net/api/auth/signup",
-        {
-          name: teamName,
-          password: teamPassword,
-          tags: filledRegNumbers,
-        },
-      );
+      const response = await axios.post(`${BACKEND_URL}/api/auth/signup`, {
+        name: teamName,
+        password: teamPassword,
+        tags: filledRegNumbers,
+      });
 
       if (response.status === 200) {
         router.push("/auth/login");

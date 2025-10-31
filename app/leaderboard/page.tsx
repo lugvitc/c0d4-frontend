@@ -1,6 +1,7 @@
 "use client";
 
 import TeamCard from "@/components/TeamCard";
+import { BACKEND_URL } from "@/lib/constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,7 +20,7 @@ export default function Leaderboard() {
       try {
         setLoading(true);
         const response = await axios.get<TeamData[]>(
-          "https://pwn.lugvitc.net/api/leaderboard",
+          `${BACKEND_URL}/api/leaderboard`,
         );
 
         const sortedTeams = response.data.sort((a, b) => b.tpoints - a.tpoints);

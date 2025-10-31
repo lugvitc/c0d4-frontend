@@ -1,5 +1,6 @@
 "use client";
 
+import { BACKEND_URL } from "@/lib/constants";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,7 +36,7 @@ export default function SignIn() {
 
     try {
       const response = await axios.post(
-        "https://pwn.lugvitc.net/api/auth/login",
+        `${BACKEND_URL}/api/auth/login`,
         {
           name: teamName,
           password: password,

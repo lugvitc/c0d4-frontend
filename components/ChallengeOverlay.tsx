@@ -1,5 +1,6 @@
 "use client";
 
+import { BACKEND_URL, CTF_SERVER_DOMAIN } from "@/lib/constants";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
@@ -89,7 +90,7 @@ export default function ChallengeOverlay({
     const fetchOriginalPoints = async () => {
       try {
         const response = await axios.get(
-          `https://pwn.lugvitc.net/api/ctf/${challenge.id}`,
+          `${BACKEND_URL}/api/ctf/${challenge.id}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -116,7 +117,7 @@ export default function ChallengeOverlay({
     setHintError(null);
     try {
       const response = await axios.get<Hint[]>(
-        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/viewed_hints`,
+        `${BACKEND_URL}/api/ctf/${challenge.id}/viewed_hints`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -148,7 +149,7 @@ export default function ChallengeOverlay({
 
     try {
       const response = await axios.post(
-        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/start`,
+        `${BACKEND_URL}/api/ctf/${challenge.id}/start`,
         {},
         {
           headers: {
@@ -202,7 +203,7 @@ export default function ChallengeOverlay({
 
     try {
       await axios.post(
-        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/stop`,
+        `${BACKEND_URL}/api/ctf/${challenge.id}/stop`,
         {},
         {
           headers: {
@@ -242,7 +243,7 @@ export default function ChallengeOverlay({
 
     try {
       const response = await axios.post(
-        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/flag`,
+        `${BACKEND_URL}/api/ctf/${challenge.id}/flag`,
         { flag: flagInput },
         {
           headers: {
@@ -286,7 +287,7 @@ export default function ChallengeOverlay({
     setHintInfoMessage(null);
     try {
       const response = await axios.get(
-        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/hint`,
+        `${BACKEND_URL}/api/ctf/${challenge.id}/hint`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -505,13 +506,13 @@ export default function ChallengeOverlay({
                             className="flex items-center gap-2 rounded bg-black/40 p-2"
                           >
                             <span className="font-mono text-sm text-gray-300">
-                              pwn.lugvitc.net:{port}
+                              {CTF_SERVER_DOMAIN}:{port}
                             </span>
                             <button
                               type="button"
                               onClick={() => {
                                 navigator.clipboard.writeText(
-                                  `pwn.lugvitc.net:${port}`,
+                                  `${CTF_SERVER_DOMAIN}:${port}`,
                                 );
                                 setCopiedPort(port);
                                 setTimeout(() => setCopiedPort(null), 2000);
