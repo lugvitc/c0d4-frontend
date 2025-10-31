@@ -634,7 +634,7 @@ export default function ChallengeOverlay({
         </div>
       </div>
       {isHintModalOpen && pendingReduction !== null && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4">
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4">
           <div className="w-full max-w-sm rounded-xl border border-[#00E1FF]/40 bg-[#0a0a0a] p-6 text-center shadow-[0_0_30px_rgba(0,225,255,0.25)]">
             <p className="font-jura text-sm text-gray-200">
               This hint will reduce the challenge by{" "}

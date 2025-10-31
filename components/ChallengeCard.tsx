@@ -73,7 +73,7 @@ export default function ChallengeCard({
     >
       {!isCompleted && (
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-br from-[#00E1FF]/10 to-transparent"></div>
+          <div className="absolute top-0 left-0 h-full w-full bg-linear-to-br from-[#00E1FF]/10 to-transparent"></div>
         </div>
       )}
 
@@ -120,7 +120,7 @@ export default function ChallengeCard({
         </div>
 
         <div
-          className={`h-[2px] w-full bg-gradient-to-r opacity-50 ${
+          className={`h-0.5 w-full bg-linear-to-r opacity-50 ${
             isCompleted
               ? "from-green-500 via-transparent to-green-500"
               : "from-[#00E1FF] via-transparent to-[#00E1FF]"
