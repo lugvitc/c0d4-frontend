@@ -13,6 +13,12 @@ export default function CreateTeam() {
   const [regNumbers, setRegNumbers] = useState(["", "", ""]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [unavailableRegNumbers, setUnavailableRegNumbers] = useState<string[]>(
+    [],
+  );
+  const [unregisteredRegNumbers, setUnregisteredRegNumbers] = useState<
+    string[]
+  >([]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -25,11 +31,19 @@ export default function CreateTeam() {
     const updated = [...regNumbers];
     updated[index] = value;
     setRegNumbers(updated);
+    if (unavailableRegNumbers.length > 0) {
+      setUnavailableRegNumbers([]);
+    }
+    if (unregisteredRegNumbers.length > 0) {
+      setUnregisteredRegNumbers([]);
+    }
   };
 
   const handleCreateTeam = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setUnavailableRegNumbers([]);
+    setUnregisteredRegNumbers([]);
 
     const filledRegNumbers = regNumbers.filter(
       (reg) => reg.trim().toLowerCase() !== "",
@@ -60,7 +74,26 @@ export default function CreateTeam() {
         setError("Failed to create team. Please try again.");
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      if (axios.isAxiosError(err) && err.response?.data?.msg_code === 20) {
+        const unavailableTags = err.response.data.tags || [];
+        const unavailableTagsList = unavailableTags.map(
+          (tag: { tag: string }) => tag.tag.toLowerCase(),
+        );
+        setUnavailableRegNumbers(unavailableTagsList);
+        setError("Some users are already part of a team.");
+      } else if (
+        axios.isAxiosError(err) &&
+        err.response?.data?.msg_code === 24
+      ) {
+        const unregisteredTags = err.response.data.tags || [];
+        const unregisteredTagsList = unregisteredTags.map((tag: string) =>
+          tag.toLowerCase(),
+        );
+        setUnregisteredRegNumbers(unregisteredTagsList);
+        setError("Some registration numbers are not registered.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -128,10 +161,31 @@ export default function CreateTeam() {
               placeholder="Registration Number (Team Lead)"
               value={regNumbers[0]}
               onChange={(e) => handleRegNumberChange(0, e.target.value)}
-              className="w-full rounded-lg border-2 border-gray-500 bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base"
+              className={`w-full rounded-lg border-2 ${
+                unavailableRegNumbers.includes(regNumbers[0].toLowerCase()) ||
+                unregisteredRegNumbers.includes(regNumbers[0].toLowerCase())
+                  ? "border-red-500"
+                  : "border-gray-500"
+              } bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base`}
               style={{ fontFamily: "var(--font-jura)" }}
               required
             />
+            {unavailableRegNumbers.includes(regNumbers[0].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user is already part of a team
+              </p>
+            )}
+            {unregisteredRegNumbers.includes(regNumbers[0].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user has not registered
+              </p>
+            )}
           </div>
 
           <div className="w-full">
@@ -146,9 +200,30 @@ export default function CreateTeam() {
               placeholder="Registration Number (Optional)"
               value={regNumbers[1]}
               onChange={(e) => handleRegNumberChange(1, e.target.value)}
-              className="w-full rounded-lg border-2 border-gray-500 bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base"
+              className={`w-full rounded-lg border-2 ${
+                unavailableRegNumbers.includes(regNumbers[1].toLowerCase()) ||
+                unregisteredRegNumbers.includes(regNumbers[1].toLowerCase())
+                  ? "border-red-500"
+                  : "border-gray-500"
+              } bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base`}
               style={{ fontFamily: "var(--font-jura)" }}
             />
+            {unavailableRegNumbers.includes(regNumbers[1].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user is already part of a team
+              </p>
+            )}
+            {unregisteredRegNumbers.includes(regNumbers[1].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user has not registered
+              </p>
+            )}
           </div>
 
           <div className="w-full">
@@ -163,9 +238,30 @@ export default function CreateTeam() {
               placeholder="Registration Number (Optional)"
               value={regNumbers[2]}
               onChange={(e) => handleRegNumberChange(2, e.target.value)}
-              className="w-full rounded-lg border-2 border-gray-500 bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base"
+              className={`w-full rounded-lg border-2 ${
+                unavailableRegNumbers.includes(regNumbers[2].toLowerCase()) ||
+                unregisteredRegNumbers.includes(regNumbers[2].toLowerCase())
+                  ? "border-red-500"
+                  : "border-gray-500"
+              } bg-gray-800/40 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 hover:border-[#00E1FF] focus:border-[#00E1FF] focus:outline-none sm:text-base`}
               style={{ fontFamily: "var(--font-jura)" }}
             />
+            {unavailableRegNumbers.includes(regNumbers[2].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user is already part of a team
+              </p>
+            )}
+            {unregisteredRegNumbers.includes(regNumbers[2].toLowerCase()) && (
+              <p
+                className="mt-1 text-xs text-red-400 sm:text-sm"
+                style={{ fontFamily: "var(--font-jura)" }}
+              >
+                This user has not registered
+              </p>
+            )}
           </div>
 
           <button

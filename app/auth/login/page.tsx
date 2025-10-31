@@ -60,37 +60,14 @@ export default function SignIn() {
       console.error("Login error:", err);
 
       if (axios.isAxiosError(err) && err.response) {
-        const status = err.response.status;
         const errorData = err.response.data;
 
-        switch (status) {
-          case 401:
-            setError(
-              errorData.detail ||
-                "Invalid credentials. Please check your team name and password.",
-            );
-            break;
-          case 404:
-            setError(
-              errorData.detail ||
-                "Team not found. Please check your team name.",
-            );
-            break;
-          case 422:
-            setError(
-              errorData.detail ||
-                "Invalid input. Please check your credentials.",
-            );
-            break;
-          case 500:
-            setError("Server error. Please try again later.");
-            break;
-          default:
-            setError(
-              errorData.detail ||
-                errorData.message ||
-                "Login failed. Please try again.",
-            );
+        if (errorData?.msg_code === 10) {
+          setError("Team not found. Please check your team name.");
+        } else if (errorData?.msg_code === 14) {
+          setError("Incorrect password. Please try again.");
+        } else {
+          setError("Login failed. Please try again.");
         }
       } else {
         setError("Network error. Please check your connection and try again.");

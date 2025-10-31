@@ -157,6 +157,17 @@ export default function ChallengeOverlay({
         },
       );
 
+      if (response.data?.msg_code === 8) {
+        setContainerMessage(
+          "Instance limit reached for your team. Please stop a running instance first.",
+        );
+        setTimeout(() => {
+          setContainerMessage("");
+          setContainerStatus("idle");
+        }, 3000);
+        return;
+      }
+
       const { static_url } = response.data;
 
       if (static_url) {
@@ -171,7 +182,13 @@ export default function ChallengeOverlay({
 
       await onContainerUpdate();
     } catch (error) {
-      setContainerMessage("Failed to start instance. Please try again.");
+      if (axios.isAxiosError(error) && error.response?.data?.msg_code === 8) {
+        setContainerMessage(
+          "Instance limit reached for your team. Please stop a running instance first.",
+        );
+      } else {
+        setContainerMessage("Failed to start instance. Please try again.");
+      }
       setTimeout(() => {
         setContainerMessage("");
         setContainerStatus("idle");
