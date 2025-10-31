@@ -19,7 +19,7 @@ export default function Leaderboard() {
       try {
         setLoading(true);
         const response = await axios.get<TeamData[]>(
-          "https://dev.lugvitc.net/api/leaderboard",
+          "https://pwn.lugvitc.net/api/leaderboard",
         );
 
         const sortedTeams = response.data.sort((a, b) => b.tpoints - a.tpoints);

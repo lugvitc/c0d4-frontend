@@ -83,7 +83,7 @@ export default function ChallengesPage() {
   const fetchRunningContainers = async () => {
     try {
       const response = await axios.get<Record<string, number[]>>(
-        "https://dev.lugvitc.net/api/team/containers",
+        "https://pwn.lugvitc.net/api/team/containers",
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -107,19 +107,19 @@ export default function ChallengesPage() {
         };
 
         const response = await axios.get<ApiChallenge[]>(
-          "https://dev.lugvitc.net/api/ctf/list",
+          "https://pwn.lugvitc.net/api/ctf/list",
           { headers },
         );
 
         try {
           const teamResponse = await axios.get<TeamInfo>(
-            "https://dev.lugvitc.net/api/team/me",
+            "https://pwn.lugvitc.net/api/team/me",
             { headers },
           );
 
           try {
             const leaderboardResponse = await axios.get<LeaderboardTeam[]>(
-              "https://dev.lugvitc.net/api/leaderboard",
+              "https://pwn.lugvitc.net/api/leaderboard",
             );
 
             const currentTeamInLeaderboard = leaderboardResponse.data.find(
@@ -145,7 +145,7 @@ export default function ChallengesPage() {
         let completedIds = new Set<number>();
         try {
           const completedResponse = await axios.get<ApiChallenge[]>(
-            "https://dev.lugvitc.net/api/ctf/completed",
+            "https://pwn.lugvitc.net/api/ctf/completed",
             { headers },
           );
           completedIds = new Set(completedResponse.data.map((c) => c.id));
@@ -245,7 +245,7 @@ export default function ChallengesPage() {
 
     try {
       await axios.post(
-        `https://dev.lugvitc.net/api/ctf/${ctfId}/stop`,
+        `https://pwn.lugvitc.net/api/ctf/${ctfId}/stop`,
         {},
         {
           headers: {
@@ -268,7 +268,7 @@ export default function ChallengesPage() {
 
     try {
       await axios.post(
-        "https://dev.lugvitc.net/api/ctf/stopall",
+        "https://pwn.lugvitc.net/api/ctf/stopall",
         {},
         {
           headers: {

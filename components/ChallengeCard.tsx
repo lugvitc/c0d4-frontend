@@ -39,7 +39,7 @@ export default function ChallengeCard({
     const fetchOriginalPoints = async () => {
       try {
         const response = await axios.get(
-          `https://dev.lugvitc.net/api/ctf/${id}`,
+          `https://pwn.lugvitc.net/api/ctf/${id}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,

@@ -35,7 +35,7 @@ export default function SignIn() {
 
     try {
       const response = await axios.post(
-        "https://dev.lugvitc.net/api/auth/login",
+        "https://pwn.lugvitc.net/api/auth/login",
         {
           name: teamName,
           password: password,

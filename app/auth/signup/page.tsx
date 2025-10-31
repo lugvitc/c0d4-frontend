@@ -46,7 +46,7 @@ export default function CreateTeam() {
 
     try {
       const response = await axios.post(
-        "https://dev.lugvitc.net/api/auth/signup",
+        "https://pwn.lugvitc.net/api/auth/signup",
         {
           name: teamName,
           password: teamPassword,

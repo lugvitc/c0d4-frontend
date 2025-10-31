@@ -89,7 +89,7 @@ export default function ChallengeOverlay({
     const fetchOriginalPoints = async () => {
       try {
         const response = await axios.get(
-          `https://dev.lugvitc.net/api/ctf/${challenge.id}`,
+          `https://pwn.lugvitc.net/api/ctf/${challenge.id}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -116,7 +116,7 @@ export default function ChallengeOverlay({
     setHintError(null);
     try {
       const response = await axios.get<Hint[]>(
-        `https://dev.lugvitc.net/api/ctf/${challenge.id}/viewed_hints`,
+        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/viewed_hints`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -148,7 +148,7 @@ export default function ChallengeOverlay({
 
     try {
       const response = await axios.post(
-        `https://dev.lugvitc.net/api/ctf/${challenge.id}/start`,
+        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/start`,
         {},
         {
           headers: {
@@ -185,7 +185,7 @@ export default function ChallengeOverlay({
 
     try {
       await axios.post(
-        `https://dev.lugvitc.net/api/ctf/${challenge.id}/stop`,
+        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/stop`,
         {},
         {
           headers: {
@@ -225,7 +225,7 @@ export default function ChallengeOverlay({
 
     try {
       const response = await axios.post(
-        `https://dev.lugvitc.net/api/ctf/${challenge.id}/flag`,
+        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/flag`,
         { flag: flagInput },
         {
           headers: {
@@ -269,7 +269,7 @@ export default function ChallengeOverlay({
     setHintInfoMessage(null);
     try {
       const response = await axios.get(
-        `https://dev.lugvitc.net/api/ctf/${challenge.id}/hint`,
+        `https://pwn.lugvitc.net/api/ctf/${challenge.id}/hint`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
@@ -488,13 +488,13 @@ export default function ChallengeOverlay({
                             className="flex items-center gap-2 rounded bg-black/40 p-2"
                           >
                             <span className="font-mono text-sm text-gray-300">
-                              dev.lugvitc.net:{port}
+                              pwn.lugvitc.net:{port}
                             </span>
                             <button
                               type="button"
                               onClick={() => {
                                 navigator.clipboard.writeText(
-                                  `dev.lugvitc.net:${port}`,
+                                  `pwn.lugvitc.net:${port}`,
                                 );
                                 setCopiedPort(port);
                                 setTimeout(() => setCopiedPort(null), 2000);
