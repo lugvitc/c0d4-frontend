@@ -6,8 +6,8 @@ interface TeamCardProps {
 
 export default function TeamCard({ name, points, rank }: TeamCardProps) {
   return (
-    <div className="group relative flex items-center gap-4 overflow-hidden rounded-r-full border-l-4 border-[#00E1FF]/30 bg-gradient-to-r from-[#00E1FF]/10 via-[#00E1FF]/5 to-transparent p-3 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:border-[#00E1FF]/60 hover:shadow-[0_0_20px_rgba(0,225,255,0.2)] md:gap-6">
-      <div className="flex-shrink-0">
+    <div className="group relative flex items-center gap-4 overflow-hidden rounded-r-full border-l-4 border-[#00E1FF]/30 bg-linear-to-r from-[#00E1FF]/10 via-[#00E1FF]/5 to-transparent p-3 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:border-[#00E1FF]/60 hover:shadow-[0_0_20px_rgba(0,225,255,0.2)] md:gap-6">
+      <div className="shrink-0">
         <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#00E1FF]/30 bg-black/40 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-[#00E1FF]/60 md:h-14 md:w-14">
           <span className="font-orbitron text-lg font-bold text-[#00E1FF] md:text-xl">
             {rank}
@@ -31,7 +31,7 @@ export default function TeamCard({ name, points, rank }: TeamCardProps) {
       </div>
 
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-[#00E1FF]/10 via-[#00E1FF]/5 to-transparent"></div>
+        <div className="absolute inset-0 animate-pulse bg-linear-to-r from-[#00E1FF]/10 via-[#00E1FF]/5 to-transparent"></div>
       </div>
     </div>
   );

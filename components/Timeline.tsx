@@ -124,7 +124,7 @@ export default function Timeline() {
         {/* Timeline line*/}
         <div className="absolute top-0 bottom-0 left-8 w-0.5 bg-[#00E1FF]/30 md:left-1/2"></div>
         <div
-          className="absolute top-0 left-8 w-0.5 bg-gradient-to-b from-[#00E1FF] to-[#00E1FF]/50 transition-all duration-300 ease-out md:left-1/2"
+          className="absolute top-0 left-8 w-0.5 bg-linear-to-b from-[#00E1FF] to-[#00E1FF]/50 transition-all duration-300 ease-out md:left-1/2"
           style={{
             height: `${lineHeight}%`,
             boxShadow: "0 0 10px rgba(0, 225, 255, 0.5)",
@@ -162,7 +162,7 @@ export default function Timeline() {
                   >
                     <div className="relative h-4 w-4 rounded-full border-2 border-[#00E1FF] bg-black shadow-[0_0_10px_rgba(0,225,255,0.5)]">
                       <div
-                        className={`absolute inset-0 m-[1px] rounded-full bg-[#00E1FF] transition-transform duration-500 ease-out ${
+                        className={`absolute inset-0 m-px rounded-full bg-[#00E1FF] transition-transform duration-500 ease-out ${
                           visibleDots[index] ? "scale-100" : "scale-0"
                         }`}
                         style={{

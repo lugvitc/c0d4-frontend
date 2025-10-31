@@ -142,9 +142,7 @@ export default function Navbar() {
       <nav className="fixed top-0 right-0 z-50 hidden h-screen lg:flex">
         <div
           className={`relative flex flex-col items-center justify-between py-8 transition-all duration-500 ease-in-out ${
-            isDesktopCollapsed && !isDesktopExpanded
-              ? "w-[80px] px-0"
-              : "w-[280px] px-6"
+            isDesktopCollapsed && !isDesktopExpanded ? "w-20 px-0" : "w-72 px-6"
           } ${!isMounted ? "opacity-0" : "opacity-100"}`}
         >
           <div
@@ -156,7 +154,7 @@ export default function Navbar() {
           ></div>
 
           <div
-            className={`absolute top-0 right-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#00E1FF] to-transparent opacity-50 ${!isDesktopExpanded ? "opacity-0" : ""}`}
+            className={`absolute top-0 right-0 h-full w-0.5 bg-linear-to-b from-transparent via-[#00E1FF] to-transparent opacity-50 ${!isDesktopExpanded ? "opacity-0" : ""}`}
           ></div>
 
           <div
@@ -264,13 +262,13 @@ export default function Navbar() {
           >
             {menuItems.map((item, index) => (
               <li key={item.href} className="group relative whitespace-nowrap">
-                <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
+                <div className="absolute top-1/2 -left-5 h-0.5 w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
                 <HackerLink href={item.href} text={item.text} />
               </li>
             ))}
             {isAuthenticated && (
               <li className="group relative whitespace-nowrap">
-                <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
+                <div className="absolute top-1/2 -left-5 h-0.5 w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
                 <button onClick={handleLogout}>
                   <HackerLink href="" text="Logout" />
                 </button>
@@ -285,7 +283,7 @@ export default function Navbar() {
                 : "pointer-events-auto max-h-[100px] scale-100 opacity-100"
             }`}
           >
-            <div className="h-16 w-[1px] bg-gradient-to-b from-[#00E1FF] to-transparent"></div>
+            <div className="h-16 w-px bg-linear-to-b from-[#00E1FF] to-transparent"></div>
             <div className="h-2 w-2 animate-pulse rounded-full bg-[#00E1FF] shadow-[0_0_10px_#00E1FF]"></div>
           </div>
         </div>
@@ -355,7 +353,7 @@ export default function Navbar() {
                   className="border-l-2 border-transparent pl-4 transition-all hover:border-[#00E1FF]"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <div className="absolute top-1/2 left-[-20px] h-[2px] w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
+                  <div className="absolute top-1/2 -left-5 h-0.5 w-0 -translate-y-1/2 bg-[#00E1FF] shadow-[0_0_10px_#00E1FF] transition-all duration-300 group-hover:w-3"></div>
                   <button onClick={handleLogout}>
                     <HackerLink href="" text="Logout" />
                   </button>
