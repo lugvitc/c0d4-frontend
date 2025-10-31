@@ -3,8 +3,10 @@ export default function Categories() {
     <section
       className={`font-orbitron flex flex-col items-center px-6 py-16 text-white`}
     >
-      <h2 className={`font-jura mb-10 text-2xl font-black tracking-widest`}>
-        ENTER THE WORLD OF CYBERSECURITY
+      <h2
+        className={`font-jura mb-10 text-center text-2xl font-black tracking-widest`}
+      >
+        LEARN
       </h2>
 
       <div className="flex w-full max-w-2xs flex-col gap-4 md:grid md:max-w-3xl md:grid-cols-6">
