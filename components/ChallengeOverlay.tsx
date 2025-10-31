@@ -166,12 +166,12 @@ export default function ChallengeOverlay({
         onStaticUrlUpdate(challenge.id, urlWithSlash);
       }
 
-      setContainerMessage("Container started successfully!");
+      setContainerMessage("Instance started successfully!");
       setContainerStatus("idle");
 
       await onContainerUpdate();
     } catch (error) {
-      setContainerMessage("Failed to start container. Please try again.");
+      setContainerMessage("Failed to start instance. Please try again.");
       setTimeout(() => {
         setContainerMessage("");
         setContainerStatus("idle");
@@ -196,7 +196,7 @@ export default function ChallengeOverlay({
 
       onStaticUrlUpdate(challenge.id, null);
 
-      setContainerMessage("Container stopped successfully!");
+      setContainerMessage("Instance stopped successfully!");
       setContainerStatus("idle");
 
       await onContainerUpdate();
@@ -205,7 +205,7 @@ export default function ChallengeOverlay({
         setContainerMessage("");
       }, 3000);
     } catch (error) {
-      setContainerMessage("Failed to stop container. Please try again.");
+      setContainerMessage("Failed to stop instance. Please try again.");
       setTimeout(() => {
         setContainerMessage("");
         setContainerStatus("idle");

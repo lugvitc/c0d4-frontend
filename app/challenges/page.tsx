@@ -92,7 +92,7 @@ export default function ChallengesPage() {
       );
       setRunningContainers(response.data);
     } catch (error) {
-      console.error("Error fetching running containers:", error);
+      console.error("Error fetching running instances:", error);
     }
   };
 
@@ -254,10 +254,9 @@ export default function ChallengesPage() {
         },
       );
 
-      // Refresh the running containers list
       await fetchRunningContainers();
     } catch (error) {
-      console.error("Error stopping container:", error);
+      console.error("Error stopping instance:", error);
     } finally {
       setStoppingContainer(null);
     }
@@ -277,10 +276,9 @@ export default function ChallengesPage() {
         },
       );
 
-      // Refresh the running containers list
       await fetchRunningContainers();
     } catch (error) {
-      console.error("Error stopping all containers:", error);
+      console.error("Error stopping all instances:", error);
     } finally {
       setStoppingContainer(null);
     }
@@ -385,19 +383,19 @@ export default function ChallengesPage() {
             className="font-orbitron rounded-lg border border-[#00E1FF] bg-[#00E1FF]/10 px-6 py-2 text-sm font-semibold text-[#00E1FF] transition-all duration-300 hover:bg-[#00E1FF]/20 hover:shadow-[0_0_20px_rgba(0,225,255,0.5)]"
           >
             {showContainerManager
-              ? "HIDE CONTAINER MANAGER"
-              : "MANAGE CONTAINERS"}
+              ? "HIDE INSTANCE MANAGER"
+              : "MANAGE INSTANCES"}
           </button>
 
           {showContainerManager && (
             <div className="mt-6 w-full max-w-2xl rounded-lg border border-[#00E1FF]/60 bg-[#12121270] p-6 shadow-[0_0_20px_rgba(0,225,255,0.2)] backdrop-blur-md">
               <h3 className="font-orbitron mb-4 text-xl font-bold text-[#00E1FF]">
-                Running Containers
+                Running Instances
               </h3>
 
               {Object.keys(runningContainers).length === 0 ? (
                 <p className="font-jura text-center text-gray-400">
-                  No running containers
+                  No running instances
                 </p>
               ) : (
                 <div className="space-y-3">
@@ -446,7 +444,7 @@ export default function ChallengesPage() {
                   >
                     {stoppingContainer === "all"
                       ? "STOPPING ALL..."
-                      : "STOP ALL CONTAINERS"}
+                      : "STOP ALL INSTANCES"}
                   </button>
                 </div>
               )}
