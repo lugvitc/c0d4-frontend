@@ -45,11 +45,13 @@ interface LeaderboardTeam {
 }
 
 const challengeTypes = [
+  "MISCELLANEOUS",
   "WEB EXPLOITATION",
   "BINARY EXPLOITATION",
   "FORENSICS",
   "OSINT",
   "REVERSING",
+  "CRYPTOGRAPHY",
 ];
 
 function getTypesFromMask(mask: number): string[] {
