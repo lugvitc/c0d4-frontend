@@ -346,34 +346,25 @@ export default function ChallengesPage() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pb-20">
-        {categories.map((category) => (
-          <div key={category.id} className="mb-16">
-            <div className="mb-6 flex items-center gap-4">
-              <div className="h-0.5 flex-1 bg-linear-to-r from-transparent via-[#00E1FF] to-transparent"></div>
-              <h2 className="font-orbitron text-2xl font-bold tracking-wider text-[#00E1FF] md:text-3xl">
-                {category.name}
-              </h2>
-              <div className="h-0.5 flex-1 bg-linear-to-r from-transparent via-[#00E1FF] to-transparent"></div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {category.challenges.map((challenge) => (
-                <ChallengeCard
-                  key={challenge.id}
-                  id={challenge.id}
-                  name={challenge.name}
-                  points={challenge.points}
-                  isCompleted={challenge.isCompleted}
-                  onClick={() => {
-                    if (!challenge.isCompleted) {
-                      setSelectedChallenge(challenge);
-                    }
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {categories.flatMap((category) =>
+            category.challenges.map((challenge) => (
+              <ChallengeCard
+                key={challenge.id}
+                id={challenge.id}
+                name={challenge.name}
+                points={challenge.points}
+                isCompleted={challenge.isCompleted}
+                categories={challenge.categories}
+                onClick={() => {
+                  if (!challenge.isCompleted) {
+                    setSelectedChallenge(challenge);
+                  }
+                }}
+              />
+            )),
+          )}
+        </div>
 
         <div className="mt-12 flex flex-col items-center">
           <button
