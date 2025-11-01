@@ -1,6 +1,6 @@
 "use client";
 
-import { BACKEND_URL, CTF_SERVER_DOMAIN } from "@/lib/constants";
+import { BACKEND_URL, CTF_SERVER_DOMAIN, HINTS_ENABLED } from "@/lib/constants";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
@@ -43,6 +43,7 @@ const getDifficulty = (points: number) => {
 };
 
 const hintReductionPercentages = [0.9, 0.85, 0.75];
+const hintsEnabled = HINTS_ENABLED;
 
 export default function ChallengeOverlay({
   challenge,
@@ -113,6 +114,11 @@ export default function ChallengeOverlay({
   }, [challenge.id, challenge.points]);
 
   const loadViewedHints = useCallback(async () => {
+    if (!hintsEnabled) {
+      setViewedHints([]);
+      setHintsLoading(false);
+      return;
+    }
     setHintsLoading(true);
     setHintError(null);
     try {
@@ -130,11 +136,12 @@ export default function ChallengeOverlay({
     } finally {
       setHintsLoading(false);
     }
-  }, [challenge.id]);
+  }, [challenge.id, hintsEnabled]);
 
   useEffect(() => {
+    if (!hintsEnabled) return;
     loadViewedHints();
-  }, [loadViewedHints]);
+  }, [hintsEnabled, loadViewedHints]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -282,6 +289,7 @@ export default function ChallengeOverlay({
   };
 
   const handleRequestHint = async (reduction?: number) => {
+    if (!hintsEnabled) return;
     setRequestingHint(true);
     setHintError(null);
     setHintInfoMessage(null);
@@ -319,7 +327,7 @@ export default function ChallengeOverlay({
   };
 
   const handleOpenHintModal = () => {
-    if (requestingHint) return;
+    if (!hintsEnabled || requestingHint) return;
     setHintError(null);
     setHintInfoMessage(null);
     if (!originalPoints) {
@@ -432,20 +440,22 @@ export default function ChallengeOverlay({
               >
                 DETAILS
               </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("hints")}
-                className={`font-orbitron rounded-lg border px-4 py-2 text-sm transition-all ${
-                  activeTab === "hints"
-                    ? "border-[#00E1FF] bg-[#00E1FF]/20 text-[#00E1FF]"
-                    : "border-[#333] bg-transparent text-gray-400 hover:border-[#00E1FF]/60 hover:text-[#00E1FF]"
-                }`}
-              >
-                HINTS
-              </button>
+              {hintsEnabled && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("hints")}
+                  className={`font-orbitron rounded-lg border px-4 py-2 text-sm transition-all ${
+                    activeTab === "hints"
+                      ? "border-[#00E1FF] bg-[#00E1FF]/20 text-[#00E1FF]"
+                      : "border-[#333] bg-transparent text-gray-400 hover:border-[#00E1FF]/60 hover:text-[#00E1FF]"
+                  }`}
+                >
+                  HINTS
+                </button>
+              )}
             </div>
 
-            {activeTab === "details" ? (
+            {activeTab === "details" || !hintsEnabled ? (
               <>
                 <div className="mb-6">
                   <h3 className="font-jura mb-2 text-lg font-semibold text-gray-300">
@@ -651,7 +661,7 @@ export default function ChallengeOverlay({
           </div>
         </div>
       </div>
-      {isHintModalOpen && pendingReduction !== null && (
+      {hintsEnabled && isHintModalOpen && pendingReduction !== null && (
         <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4">
           <div className="w-full max-w-sm rounded-xl border border-[#00E1FF]/40 bg-[#0a0a0a] p-6 text-center shadow-[0_0_30px_rgba(0,225,255,0.25)]">
             <p className="font-jura text-sm text-gray-200">
