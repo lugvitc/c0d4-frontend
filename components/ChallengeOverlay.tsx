@@ -36,7 +36,7 @@ const difficultyStyles = {
 };
 
 const getDifficulty = (points: number) => {
-  if (points <= 200) return { label: "Easy", className: difficultyStyles.easy };
+  if (points <= 300) return { label: "Easy", className: difficultyStyles.easy };
   if (points <= 400)
     return { label: "Medium", className: difficultyStyles.medium };
   return { label: "Hard", className: difficultyStyles.hard };
