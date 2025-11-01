@@ -609,6 +609,11 @@ export default function ChallengeOverlay({
               </>
             ) : (
               <div className="space-y-4">
+                <div className="font-jura rounded-lg border border-red-500/40 bg-red-500/10 p-3 text-center text-sm text-red-400">
+                  For each hint viewed, points will be deducted from the total
+                  you receive for the question.
+                </div>
+
                 <button
                   type="button"
                   onClick={handleOpenHintModal}
@@ -665,8 +670,7 @@ export default function ChallengeOverlay({
         <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4">
           <div className="w-full max-w-sm rounded-xl border border-[#00E1FF]/40 bg-[#0a0a0a] p-6 text-center shadow-[0_0_30px_rgba(0,225,255,0.25)]">
             <p className="font-jura text-sm text-gray-200">
-              This hint will reduce the challenge by{" "}
-              <span className="text-[#00E1FF]">{pendingReduction}</span> points.
+              Are you sure you want to view the next hint?
             </p>
             <div className="mt-4 flex gap-3">
               <button
