@@ -8,7 +8,7 @@ export default function BackgroundVideo() {
 
   return (
     <video
-      className={`${isHomePage ? "absolute" : "fixed"} -z-10 h-full w-full object-cover blur-sm`}
+      className={`${isHomePage ? "absolute" : "fixed"} -z-10 h-full w-full object-cover`}
       autoPlay
       loop
       muted
