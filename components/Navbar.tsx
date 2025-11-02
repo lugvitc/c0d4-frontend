@@ -64,6 +64,7 @@ export default function Navbar() {
     { href: "/#highlights", text: "Highlights" },
     { href: "/#rules", text: "Rules" },
     { href: "/#timeline", text: "Timeline" },
+    { href: "/leaderboard", text: "Leaderboard" },
   ];
   const menuItems = baseMenuItems.filter((item) => {
     if (item.requiresAuth) return isAuthenticated;
